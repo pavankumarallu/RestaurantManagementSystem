@@ -1,4 +1,4 @@
-package Login_Pages;
+package LoginPages_Package;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.EventQueue;

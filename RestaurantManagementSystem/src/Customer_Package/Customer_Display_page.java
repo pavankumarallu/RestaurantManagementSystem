@@ -8,8 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-
-import Login_Pages.Admin_Customer_Login;
+import LoginPages_Package.Admin_Customer_Login;
 
 import javax.swing.JLabel;
 import java.awt.Font;
