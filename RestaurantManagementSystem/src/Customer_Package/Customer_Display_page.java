@@ -13,6 +13,7 @@ import Login_Pages.Admin_Customer_Login;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JLayeredPane;
@@ -22,6 +23,7 @@ import java.awt.CardLayout;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -84,7 +86,7 @@ public class Customer_Display_page extends JFrame {
 		contentPane.setLayout(null);
 		
 		layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 119, 1050, 530);
+		layeredPane.setBounds(0, 157, 1050, 492);
 		contentPane.add(layeredPane);
 		layeredPane.setLayout(new CardLayout(0, 0));
 		
@@ -97,8 +99,8 @@ public class Customer_Display_page extends JFrame {
 		menudis.setEditable(false);
 		menudis.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
 		menudis.setBackground(Color.ORANGE);
-		menudis.setBounds(94, 70, 858, 417);
-//		menudis.append("~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~\n\n");
+		menudis.setBounds(94, 70, 851, 387);
+		menudis.append("~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~\n\n");
 //		for(int i=0;i<menulist1.size();i++)
 //		{
 //			
@@ -178,7 +180,7 @@ public class Customer_Display_page extends JFrame {
 		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setBounds(10, 339, 190, 53);
+		btnNewButton.setBounds(10, 300, 190, 53);
 		MakeOrder.add(btnNewButton);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -197,7 +199,7 @@ public class Customer_Display_page extends JFrame {
 		btnGenerateBill.setForeground(Color.WHITE);
 		btnGenerateBill.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		btnGenerateBill.setBackground(Color.BLACK);
-		btnGenerateBill.setBounds(243, 337, 185, 56);
+		btnGenerateBill.setBounds(244, 298, 185, 56);
 		MakeOrder.add(btnGenerateBill);
 		
 		JButton btnPayBill = new JButton("Pay Bill");
@@ -225,7 +227,7 @@ public class Customer_Display_page extends JFrame {
 		btnPayBill.setForeground(Color.WHITE);
 		btnPayBill.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		btnPayBill.setBackground(Color.BLACK);
-		btnPayBill.setBounds(131, 417, 185, 56);
+		btnPayBill.setBounds(10, 377, 419, 56);
 		MakeOrder.add(btnPayBill);
 		
 		
@@ -238,12 +240,12 @@ public class Customer_Display_page extends JFrame {
 		JLabel lblNewLabel = new JLabel("Hello "+name);
 		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 20));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(28, 33, 216, 55);
+		lblNewLabel.setBounds(850, 54, 216, 55);
 		contentPane.add(lblNewLabel);
 		
 		JButton MenuCard_btn = new JButton("Menu Card");
 		JButton MakeOrder_btn = new JButton("Order Now");
-		JButton btnPreviousOrders = new JButton("Previous Orders");
+		JButton btnPreviousOrders = new JButton("My Orders");
 		
 		MenuCard_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -256,7 +258,7 @@ public class Customer_Display_page extends JFrame {
 		MenuCard_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		MenuCard_btn.setBackground(Color.WHITE);
 		MenuCard_btn.setForeground(Color.BLACK);
-		MenuCard_btn.setBounds(254, 37, 190, 51);
+		MenuCard_btn.setBounds(283, 56, 152, 51);
 		contentPane.add(MenuCard_btn);
 		
 		
@@ -272,7 +274,7 @@ public class Customer_Display_page extends JFrame {
 		MakeOrder_btn.setForeground(Color.BLACK);
 		MakeOrder_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		MakeOrder_btn.setBackground(Color.ORANGE);
-		MakeOrder_btn.setBounds(513, 35, 190, 51);
+		MakeOrder_btn.setBounds(470, 55, 152, 53);
 		contentPane.add(MakeOrder_btn);
 		
 		
@@ -287,8 +289,14 @@ public class Customer_Display_page extends JFrame {
 		btnPreviousOrders.setForeground(Color.BLACK);
 		btnPreviousOrders.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		btnPreviousOrders.setBackground(Color.ORANGE);
-		btnPreviousOrders.setBounds(752, 33, 190, 55);
+		btnPreviousOrders.setBounds(658, 54, 152, 55);
 		contentPane.add(btnPreviousOrders);
+		
+		JLabel Img_dis = new JLabel("New label");
+		Image img = new ImageIcon(this.getClass().getResource("/restaurant_logo.jfif")).getImage();
+		Img_dis.setIcon(new ImageIcon(img));
+		Img_dis.setBounds(-27, 10, 216, 137);
+		contentPane.add(Img_dis);
 	}
 	
 private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {

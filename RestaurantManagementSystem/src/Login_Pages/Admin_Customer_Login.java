@@ -13,10 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -117,6 +120,13 @@ public class Admin_Customer_Login extends JFrame {
 		lblNewLabel_3.setForeground(new Color(255, 255, 255));
 		lblNewLabel_3.setBounds(110, 383, 254, 88);
 		panel.add(lblNewLabel_3);
+		
+		JLabel imagedisplay = new JLabel("New label");
+		Image img = new ImageIcon(this.getClass().getResource("/restaurant_logo.jfif")).getImage();
+		imagedisplay.setIcon(new ImageIcon(img));
+
+		imagedisplay.setBounds(61, 113, 303, 180);
+		panel.add(imagedisplay);
 		
 		layeredPane = new JLayeredPane();
 		layeredPane.setBounds(444, 99, 616, 560);
@@ -271,5 +281,4 @@ public class Admin_Customer_Login extends JFrame {
 		rp.setVisible(true);
 		this.dispose();
     }
-
 }

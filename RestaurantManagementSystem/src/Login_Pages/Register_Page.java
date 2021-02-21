@@ -12,10 +12,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -80,6 +83,13 @@ public class Register_Page extends JFrame {
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(78, 382, 327, 104);
 		panel.add(lblNewLabel_1);
+		
+		JLabel Image_Display = new JLabel("New label");
+		Image img = new ImageIcon(this.getClass().getResource("/restaurant_logo.jfif")).getImage();
+		Image_Display.setIcon(new ImageIcon(img));
+		Image_Display.setBounds(50, 36, 247, 300);
+		
+		panel.add(Image_Display);
 		
 		JLabel lblNewLabel_2 = new JLabel("Register");
 		lblNewLabel_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 50));
