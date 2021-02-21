@@ -98,7 +98,7 @@ public class Customer_Display_page extends JFrame {
 		menudis.setEditable(false);
 		menudis.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
 		menudis.setBackground(Color.ORANGE);
-		menudis.setBounds(94, 70, 851, 387);
+		menudis.setBounds(94, 22, 846, 435);
 		menudis.append("~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~\n\n");
 //		for(int i=0;i<menulist1.size();i++)
 //		{

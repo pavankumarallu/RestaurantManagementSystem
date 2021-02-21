@@ -59,6 +59,8 @@ public class Admin_Customer_Login extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField username_field;
 	private JPasswordField passwordField_1;
+	private JTextField textField_1;
+	private JPasswordField passwordField_2;
 
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
@@ -238,8 +240,47 @@ public class Admin_Customer_Login extends JFrame {
 		btnNewButton.setBounds(241, 403, 193, 67);
 		Admin.add(btnNewButton);
 		
+		JPanel employ = new JPanel();
+		employ.setLayout(null);
+		employ.setBackground(Color.ORANGE);
+		layeredPane.add(employ, "name_18968391601200");
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Employ");
+		lblNewLabel_1_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 44));
+		lblNewLabel_1_1.setBounds(239, 41, 236, 67);
+		employ.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Username");
+		lblNewLabel_4_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
+		lblNewLabel_4_1.setBounds(79, 163, 161, 51);
+		employ.add(lblNewLabel_4_1);
+		
+		JLabel lblNewLabel_5_1 = new JLabel("Password");
+		lblNewLabel_5_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 27));
+		lblNewLabel_5_1.setBounds(79, 245, 161, 67);
+		employ.add(lblNewLabel_5_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Verdana", Font.PLAIN, 19));
+		textField_1.setColumns(10);
+		textField_1.setBounds(284, 170, 236, 37);
+		employ.add(textField_1);
+		
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setFont(new Font("Verdana", Font.PLAIN, 20));
+		passwordField_2.setBounds(284, 263, 236, 37);
+		employ.add(passwordField_2);
+		
+		JButton btnNewButton_3 = new JButton("Login");
+		btnNewButton_3.setForeground(Color.WHITE);
+		btnNewButton_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 33));
+		btnNewButton_3.setBackground(Color.BLACK);
+		btnNewButton_3.setBounds(241, 403, 193, 67);
+		employ.add(btnNewButton_3);
+		
 		Customer_btn = new JButton("Customer");
 		Admin_btn = new JButton("Admin");
+		JButton Admin_btn_1 = new JButton("Employ");
 		Customer_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Customer);
@@ -247,13 +288,15 @@ public class Admin_Customer_Login extends JFrame {
 				Admin_btn.setBackground(Color.BLACK);
 				Customer_btn.setForeground(Color.BLACK);
 				Admin_btn.setForeground(new Color(255, 255, 255));
+				Admin_btn_1.setBackground(Color.BLACK);
+				Admin_btn_1.setForeground(new Color(255, 255, 255));
 				
 			}
 		});
-		Customer_btn.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 45));
+		Customer_btn.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 30));
 		Customer_btn.setForeground(Color.BLACK);
 		Customer_btn.setBackground(new Color(255,255,255));
-		Customer_btn.setBounds(495, 31, 221, 61);
+		Customer_btn.setBounds(449, 28, 176, 55);
 		contentPane.add(Customer_btn);
 		
 		
@@ -264,15 +307,35 @@ public class Admin_Customer_Login extends JFrame {
 				Admin_btn.setBackground(new Color(255, 255, 255));
 				Customer_btn.setForeground(new Color(255, 255, 255));
 				Admin_btn.setForeground(Color.BLACK);
+				Admin_btn_1.setBackground(Color.BLACK);
+				Admin_btn_1.setForeground(new Color(255, 255, 255));
 				
 				
 			}
 		});
 		Admin_btn.setForeground(Color.WHITE);
 		Admin_btn.setBackground(Color.BLACK);
-		Admin_btn.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 46));
-		Admin_btn.setBounds(799, 31, 221, 61);
+		Admin_btn.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 35));
+		Admin_btn.setBounds(654, 26, 176, 55);
 		contentPane.add(Admin_btn);
+		
+		
+		Admin_btn_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(employ);
+				Customer_btn.setBackground(Color.BLACK);
+				Admin_btn.setBackground(Color.BLACK);
+				Customer_btn.setForeground(Color.WHITE);
+				Admin_btn.setForeground(Color.WHITE);
+				Admin_btn_1.setBackground(new Color(255, 255, 255));
+				Admin_btn_1.setForeground(Color.BLACK);
+			}
+		});
+		Admin_btn_1.setForeground(Color.WHITE);
+		Admin_btn_1.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 35));
+		Admin_btn_1.setBackground(Color.BLACK);
+		Admin_btn_1.setBounds(851, 26, 176, 55);
+		contentPane.add(Admin_btn_1);
 	}
 
 	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {

@@ -256,6 +256,16 @@ public class Admin_Display_Pages extends JFrame {
 		
 		scrollPane_1.setViewportView(table_1);
 		
+		JPanel Delivery_boys_Panel = new JPanel();
+		Delivery_boys_Panel.setLayout(null);
+		Delivery_boys_Panel.setBackground(Color.ORANGE);
+		layeredPane.add(Delivery_boys_Panel, "name_18413995017700");
+		
+		JPanel orders_panel = new JPanel();
+		orders_panel.setLayout(null);
+		orders_panel.setBackground(Color.ORANGE);
+		layeredPane.add(orders_panel, "name_18520568449000");
+		
 		
 		
 		JButton MenuCard_display_btn = new JButton("Menu card");
@@ -268,7 +278,7 @@ public class Admin_Display_Pages extends JFrame {
 		
 		MenuCard_display_btn.setBackground(Color.WHITE);
 		MenuCard_display_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
-		MenuCard_display_btn.setBounds(223, 65, 179, 48);
+		MenuCard_display_btn.setBounds(219, 10, 179, 48);
 		MenuCard_display_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Display_menu);
@@ -283,7 +293,7 @@ public class Admin_Display_Pages extends JFrame {
 		
 		Editmenu_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
 		Editmenu_btn.setBackground(Color.ORANGE);
-		Editmenu_btn.setBounds(424, 65, 179, 48);
+		Editmenu_btn.setBounds(219, 88, 280, 48);
 		Editmenu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Edit_menu);
@@ -297,7 +307,7 @@ public class Admin_Display_Pages extends JFrame {
 		
 		Display_cust_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
 		Display_cust_btn.setBackground(Color.ORANGE);
-		Display_cust_btn.setBounds(624, 65, 179, 48);
+		Display_cust_btn.setBounds(438, 10, 179, 48);
 		Display_cust_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Customer_list);
@@ -319,6 +329,28 @@ public class Admin_Display_Pages extends JFrame {
 		img_dis.setIcon(new ImageIcon(img));
 		img_dis.setBounds(-42, 10, 234, 136);
 		contentPane.add(img_dis);
+		
+		JButton delivery_boys_btn = new JButton("Delivery Boys");
+		delivery_boys_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(Delivery_boys_Panel);
+			}
+		});
+		delivery_boys_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
+		delivery_boys_btn.setBackground(Color.ORANGE);
+		delivery_boys_btn.setBounds(546, 88, 280, 48);
+		contentPane.add(delivery_boys_btn);
+		
+		JButton orser_btn = new JButton("Orders");
+		orser_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(orders_panel);
+			}
+		});
+		orser_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
+		orser_btn.setBackground(Color.ORANGE);
+		orser_btn.setBounds(649, 10, 179, 48);
+		contentPane.add(orser_btn);
 		
 		
 
