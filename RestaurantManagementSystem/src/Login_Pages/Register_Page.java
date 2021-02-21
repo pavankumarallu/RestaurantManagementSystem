@@ -87,7 +87,7 @@ public class Register_Page extends JFrame {
 		JLabel Image_Display = new JLabel("New label");
 		Image img = new ImageIcon(this.getClass().getResource("/restaurant_logo.jfif")).getImage();
 		Image_Display.setIcon(new ImageIcon(img));
-		Image_Display.setBounds(50, 36, 247, 300);
+		Image_Display.setBounds(37, 32, 308, 366);
 		
 		panel.add(Image_Display);
 		
