@@ -31,7 +31,7 @@ public class Employe_Display_Page extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Employe_Display_Page frame = new Employe_Display_Page();
+					Employe_Display_Page frame = new Employe_Display_Page("Naidumara");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class Employe_Display_Page extends JFrame {
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public Employe_Display_Page() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public Employe_Display_Page(String Name) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -66,7 +66,7 @@ public class Employe_Display_Page extends JFrame {
 		JLabel lblNewLabel = new JLabel("EMPLYOYEE PAGE");
 		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(352, 53, 251, 59);
+		lblNewLabel.setBounds(394, 58, 251, 59);
 		panel.add(lblNewLabel);
 		
 		JLabel ImgDis = new JLabel("New label");
@@ -74,6 +74,12 @@ public class Employe_Display_Page extends JFrame {
 		Image img = new ImageIcon(this.getClass().getResource("/restaurant_logo.jfif")).getImage();
 		ImgDis.setIcon(new ImageIcon(img));
 		panel.add(ImgDis);
+		
+		JLabel lblHi = new JLabel(Name);
+		lblHi.setForeground(Color.WHITE);
+		lblHi.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 28));
+		lblHi.setBounds(805, 66, 211, 43);
+		panel.add(lblHi);
 		
 		JButton btnNewButton = new JButton("DONE");
 		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 30));
