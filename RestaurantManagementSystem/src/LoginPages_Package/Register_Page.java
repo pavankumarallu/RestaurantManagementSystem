@@ -7,10 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+import db_Connection_Package.UserConnections;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -148,19 +150,23 @@ public class Register_Page extends JFrame {
 					{
 						btnLoginActionPerformed(evt,user,pass,ph);
 					}
+					else
+					{
+						JOptionPane.showMessageDialog(null,"Password not Matched.");
+					}
 					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,e.toString());
 				} catch (InstantiationException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,e.toString());
 				} catch (IllegalAccessException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,e.toString());
 				} catch (UnsupportedLookAndFeelException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,e.toString());
 				}
 				
 			}
@@ -175,5 +181,11 @@ public class Register_Page extends JFrame {
 	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt, String user, String pass, String ph) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         
 	//TODO
+		UserConnections uc = new UserConnections();
+		uc.RegisterUser(user, pass, ph);
+		
+		Admin_Customer_Login acl = new Admin_Customer_Login();
+		acl.setVisible(true);
+		this.dispose();
     }
 }
