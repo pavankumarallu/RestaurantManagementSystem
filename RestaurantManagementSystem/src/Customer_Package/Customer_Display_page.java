@@ -8,7 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+
 import LoginPages_Package.Admin_Customer_Login;
+import db_Connection_Package.SaveMenuItems;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -25,6 +27,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -38,6 +41,7 @@ public class Customer_Display_page extends JFrame {
 	private JTextField quantity_select;
 	private JTable table;
 	double bill = 0;
+	
 //
 //	/**
 //	 * Launch the application.
@@ -48,6 +52,7 @@ public class Customer_Display_page extends JFrame {
 				try {
 					Customer_Display_page frame = new Customer_Display_page("kumpelli");
 					frame.setVisible(true);
+				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,12 +74,15 @@ public class Customer_Display_page extends JFrame {
 	
 	public Customer_Display_page(String name) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-//		ArrayList<Menuitems> menulist1 = new ArrayList<Menuitems>();
-//		Customer_db cdb = new Customer_db(name);
+//		ArrayList<Menu_Items> menulist1 = new ArrayList<Menu_Items>();
+//		SaveMenuItems smi = new SaveMenuItems();
+//		try {
+//			menulist1 = smi.getmenu();
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 //		
-//		Save_Menu sm = new Save_Menu();
-//		menulist1 = sm.getMenu();
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
 		contentPane = new JPanel();
@@ -100,10 +108,11 @@ public class Customer_Display_page extends JFrame {
 		menudis.setBackground(Color.ORANGE);
 		menudis.setBounds(94, 22, 846, 435);
 		menudis.append("~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~\n\n");
+		
 //		for(int i=0;i<menulist1.size();i++)
 //		{
 //			
-//			menudis.append("                        "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemprice()+"\n");
+//			menudis.append("                        "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemPrice()+"\n");
 //		}
 		Display_menu_items.add(menudis);
 		
@@ -116,6 +125,7 @@ public class Customer_Display_page extends JFrame {
 		Menulist_disp_select.setFont(new Font("Tempus Sans ITC", Font.BOLD, 17));
 		Menulist_disp_select.setBackground(Color.WHITE);
 		Menulist_disp_select.setBounds(218, 103, 177, 43);
+		Menulist_disp_select.addItem("Select Item");
 //		for(int i=0;i<menulist1.size();i++)
 //		{
 //			Menulist_disp_select.addItem(menulist1.get(i).getItemname());
@@ -148,7 +158,7 @@ public class Customer_Display_page extends JFrame {
 		MakeOrder.add(scrollPane);
 		
 		table = new JTable();
-		Object[] column = {"Item Name","Item Quantity", "Item Price",};
+		Object[] column = {"Item Name","Item Quantity", "Item Price"};
 		DefaultTableModel model = new DefaultTableModel();
 		table.setModel(model);
 		model.setColumnIdentifiers(column);
@@ -162,7 +172,7 @@ public class Customer_Display_page extends JFrame {
 //			public void actionPerformed(ActionEvent e) {
 //				String item =  Menulist_disp_select.getSelectedItem().toString();
 //				int quan = Integer.parseInt(quantity_select.getText());
-//				double price_each = cdb.getpriceofItem(item);
+//				double price_each = smi.getpriceofItem(item);
 //				double ttp = price_each*quan;
 //				
 //				row[0] = item;
@@ -170,7 +180,7 @@ public class Customer_Display_page extends JFrame {
 //				row[2] = ttp;
 //				bill = bill+ttp;
 //				
-//				cdb.sendData(item, ttp);
+////				smi.sendData(item, ttp);
 //				
 //				model.addRow(row);
 //				

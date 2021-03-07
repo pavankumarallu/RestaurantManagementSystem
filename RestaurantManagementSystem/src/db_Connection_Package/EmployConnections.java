@@ -1,7 +1,6 @@
 package db_Connection_Package;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,19 +10,17 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Db_Models.Menu_Items;
+import Db_Models.Employdetail;
 import Db_Models.Userdetails;
-import Db_Models.customer_details;
 
-public class UserConnections {
+public class EmployConnections {
+	
 	static String url = "jdbc:mysql://localhost:3306/restaurantmanagementsystem";
 	static String username = "root";
 	static String password = "pavan@123";
 	Connection connection;
 	
-	public UserConnections() {
-		// TODO Auto-generated constructor stub
-	
+	public EmployConnections() {
 		try {
 			connection = DriverManager.getConnection(url,username,password);
 			
@@ -31,17 +28,15 @@ public class UserConnections {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void RegisterUser(Userdetails user)
+	public void registerEmployes(Employdetail ed)
 	{
-		String query = "INSERT INTO userdetails(Username,Password,Phonenumber) VALUES(?,?,?)";
+		String query = "INSERT INTO emplydetails(employname,password,phonenumber) VALUES(?,?,?)";
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
-			pa.setString(1,user.getName());
-			pa.setString(2,user.getPassword());
-			pa.setString(3,user.getPhoneNo());
-			Create_Table(user.getName());
+			pa.setString(1,ed.getName());
+			pa.setString(2,ed.getPassword());
+			pa.setString(3,ed.getPhoneNo());
+			Create_Table(ed.getName());
 			int i = pa.executeUpdate();
 			if (i>0) {
 				JOptionPane.showMessageDialog(null, "REGISTERED");
@@ -50,23 +45,19 @@ public class UserConnections {
 			JOptionPane.showMessageDialog(null, e.toString());
 		}
 	}
-
-
-	private void Create_Table(String Username) {
-		// TODO Auto-generated method stub
-		String query = "CREATE TABLE "+Username+"(Id int(20) primary key auto_increment,itemname varchar(200),date date,itemrate double,itemquantity int)";
-		Statement stmt;
+	private void Create_Table(String name) {
+		String query = "CREATE TABLE "+name+"(Id int(20) primary key auto_increment,customername varchar(200),customerphone varchar(200),itemname varchar(200),date date,itemquantity int)";
 		try {
-			stmt = connection.createStatement();
+			Statement stmt = connection.createStatement();
 			stmt.execute(query);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.toString());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
-	public boolean LoginUser(Userdetails user)
+	public boolean EmplyeeLogin(Employdetail ed)
 	{
-		String query = "SELECT Username,Password FROM userdetails WHERE Username = '"+user.getName()+"' and Password = '"+user.getPassword()+"'";
+		String query = "SELECT employname,password FROM emplydetails WHERE employname = '"+ed.getName()+"' and password = '"+ed.getPassword()+"'";
 		
 		java.sql.Statement st;
 		try {
@@ -87,19 +78,19 @@ public class UserConnections {
 		return false;
 		
 	}
-	public ArrayList<Userdetails> getUsers()
+	public ArrayList<Employdetail> getEmploys()
 	{
-		ArrayList<Userdetails> usd = new ArrayList<Userdetails>();
-		String query = "SELECT * FROM userdetails";
+		ArrayList<Employdetail> usd = new ArrayList<Employdetail>();
+		String query = "SELECT * FROM emplydetails";
 		java.sql.Statement st;
 		try {
 			st = connection.createStatement();
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next())
 			{
-				Userdetails m = new Userdetails();
-				m.setName(rs.getString("Username"));
-				m.setPhoneNo(rs.getString("Phonenumber"));
+				Employdetail m = new Employdetail();
+				m.setName(rs.getString("employname"));
+				m.setPhoneNo(rs.getString("phonenumber"));
 				
 				usd.add(m);
 			}
@@ -111,7 +102,5 @@ public class UserConnections {
 		return usd;
 		
 	}
-
-
 
 }

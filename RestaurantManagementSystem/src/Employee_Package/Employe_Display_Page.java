@@ -99,9 +99,9 @@ public class Employe_Display_Page extends JFrame {
 		model.setColumnIdentifiers(column);
 		scrollPane.setViewportView(table);
 		
-		JLabel lblNewLabel_1 = new JLabel("Assigned Order");
+		JLabel lblNewLabel_1 = new JLabel("Assigned Orders");
 		lblNewLabel_1.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 38));
-		lblNewLabel_1.setBounds(374, 204, 270, 52);
+		lblNewLabel_1.setBounds(374, 204, 301, 52);
 		contentPane.add(lblNewLabel_1);
 	}
 }

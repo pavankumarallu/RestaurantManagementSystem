@@ -10,6 +10,13 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+//import Db_Models.Employdetail;
+//import Db_Models.Menu_Items;
+import Db_Models.Userdetails;
+//import Db_Models.customer_details;
+import db_Connection_Package.EmployConnections;
+import db_Connection_Package.SaveMenuItems;
+import db_Connection_Package.UserConnections;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -20,6 +27,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
@@ -28,12 +36,14 @@ import javax.swing.JOptionPane;
 import java.awt.CardLayout;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.ListSelectionModel;
+import javax.swing.JPasswordField;
 
 public class Admin_Display_Pages extends JFrame {
 
 	private JPanel contentPane;
 	DefaultTableModel model;
-	DefaultTableModel model2;
+	DefaultTableModel model2,model1;
 	JLayeredPane layeredPane;
 	
 	private JTable table;
@@ -43,6 +53,10 @@ public class Admin_Display_Pages extends JFrame {
 	private JTextField item_Quantity;
 	private JTextField Item_Review;
 	private JTable table_1;
+	private JTable table_2;
+	private JTextField Employname_field;
+	private JTextField Employ_phone;
+	private JPasswordField passwordField_Emloy;
 	/**
 	 * Launch the application.
 	 */
@@ -77,7 +91,9 @@ public class Admin_Display_Pages extends JFrame {
 	 */
 	public Admin_Display_Pages() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-		
+		SaveMenuItems smi = new SaveMenuItems();
+		UserConnections uc =  new UserConnections();
+		EmployConnections ec = new EmployConnections();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -103,11 +119,17 @@ public class Admin_Display_Pages extends JFrame {
 		menuitem_display.setBackground(Color.ORANGE);
 		menuitem_display.setBounds(129, 44, 800, 414);
 		
-		menuitem_display.append("~~~~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~~~~~\n");
+//		menuitem_display.append("~~~~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~~~~~\n");
+//		ArrayList<Menu_Items> menulist1  = new ArrayList<Menu_Items>();
+//		try {
+//			menulist1 = smi.getmenu();
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 //		for(int i=0;i<menulist1.size();i++)
 //		{
-//			menuitem_display.append("\n");
-//			menuitem_display.append("                                "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemprice()+"\n");
+//			menuitem_display.append("                                "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemPrice()+"\n");
 //		}
 //		
 		
@@ -126,6 +148,7 @@ public class Admin_Display_Pages extends JFrame {
 		Edit_menu.add(scrollPane);
 		
 		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setColumnSelectionAllowed(true);
 		table.setCellSelectionEnabled(true);
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 17));
@@ -140,9 +163,9 @@ public class Admin_Display_Pages extends JFrame {
 //		for(int i=0; i<menulist1.size();i++) {
 //			row[0] = String.valueOf(i+1);
 //			row[1] = menulist1.get(i).getItemname();
-//			row[2] = "Rs " + menulist1.get(i).getItemprice();
+//			row[2] = "Rs " + menulist1.get(i).getItemPrice();
 //			row[3] =  menulist1.get(i).getItemquantity();
-//			row[4] =  menulist1.get(i).getItemreviews();
+//			row[4] =  menulist1.get(i).getItemreview();
 //			model.addRow(row);
 //			
 //		}
@@ -181,12 +204,38 @@ public class Admin_Display_Pages extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton add_btn = new JButton("Add");
-		add_btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-				
-			}
-		});
+//		add_btn.addActionListener(new ActionListener() {
+////			public void actionPerformed(ActionEvent e) {
+////				//TODO
+////				if (Item_id.getText().equals("")||Item_name.getText().equals("")||Item_Price.getText().equals("")||Item_Review.getText().equals(null)) {
+////					JOptionPane.showMessageDialog(null, "Please fill the Information");
+////				}
+////				else {
+////				row[0] = Item_id.getText();
+////				row[1] = Item_name.getText();
+////				row[2] = Item_Price.getText();
+////				row[3] = item_Quantity.getText();
+////				row[4] = Item_Review.getText();
+////				
+////				Menu_Items m = new Menu_Items();
+////				m.setItemname(Item_name.getText());
+////				double d = Double.parseDouble(Item_Price.getText());
+////				m.setItemPrice(d);
+////				m.setItemreview(Item_Review.getText());
+////				m.setItemquantity(Integer.parseInt(item_Quantity.getText()));
+////				
+////				smi.setmenu(m);
+////				model.addRow(row);
+////				
+////				Item_id.setText("");
+////				Item_name.setText("");
+////				item_Quantity.setText("");
+////				Item_Price.setText("");
+////				Item_Review.setText("");
+////				JOptionPane.showMessageDialog(null, "Saved Successfully");
+////				}
+////			}
+////		});
 		add_btn.setBackground(Color.BLACK);
 		add_btn.setFont(new Font("Times New Roman", Font.BOLD, 29));
 		add_btn.setForeground(Color.WHITE);
@@ -196,7 +245,11 @@ public class Admin_Display_Pages extends JFrame {
 		JButton delete_btn = new JButton("Delete");
 		delete_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				int ii = table.getSelectedRow();
+				String cell = table.getModel().getValueAt(ii, 1).toString();
+				model.removeRow(ii);
+				smi.deleteMenu(cell);
+				
 				
 				
 			}
@@ -208,27 +261,27 @@ public class Admin_Display_Pages extends JFrame {
 		Edit_menu.add(delete_btn);
 		
 		JLabel lblNewLabel_1 = new JLabel("Item name");
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(487, 333, 99, 26);
+		lblNewLabel_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
+		lblNewLabel_1.setBounds(487, 333, 122, 26);
 		Edit_menu.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Item Price");
-		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-		lblNewLabel_1_1.setBounds(487, 365, 99, 26);
+		lblNewLabel_1_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
+		lblNewLabel_1_1.setBounds(487, 365, 122, 26);
 		Edit_menu.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Item Quantity");
-		lblNewLabel_1_2.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-		lblNewLabel_1_2.setBounds(487, 401, 122, 26);
+		lblNewLabel_1_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
+		lblNewLabel_1_2.setBounds(487, 401, 163, 26);
 		Edit_menu.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Item Review");
-		lblNewLabel_1_3.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-		lblNewLabel_1_3.setBounds(487, 437, 122, 26);
+		lblNewLabel_1_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 24));
+		lblNewLabel_1_3.setBounds(487, 437, 163, 26);
 		Edit_menu.add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Item Id");
-		lblNewLabel_1_4.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+		lblNewLabel_1_4.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
 		lblNewLabel_1_4.setBounds(487, 297, 99, 26);
 		Edit_menu.add(lblNewLabel_1_4);
 		
@@ -244,14 +297,20 @@ public class Admin_Display_Pages extends JFrame {
 		
 		
 		table_1 = new JTable();
-		table_1.setFont(new Font("Lucida Fax", Font.PLAIN, 18));
+		table_1.setFont(new Font("Times New Roman", Font.PLAIN, 21));
 		
 		Object[] column2 = {"Customer Name", "Phone Number"};
 		model2 = new DefaultTableModel();
 		table_1.setModel(model2);
 		model2.setColumnIdentifiers(column2);
 		final Object[] row2 = new Object[2];
-	
+		ArrayList<Userdetails> cl = new ArrayList<Userdetails>();
+		cl = uc.getUsers();
+		for(int i=0; i<cl.size();i++) {	
+			row2[0] = cl.get(i).getName();
+			row2[1] = "+91 " + cl.get(i).getPhoneNo();
+			model2.addRow(row2);			
+		}
 		
 		
 		scrollPane_1.setViewportView(table_1);
@@ -260,6 +319,82 @@ public class Admin_Display_Pages extends JFrame {
 		Delivery_boys_Panel.setLayout(null);
 		Delivery_boys_Panel.setBackground(Color.ORANGE);
 		layeredPane.add(Delivery_boys_Panel, "name_18413995017700");
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(62, 52, 921, 230);
+		Delivery_boys_Panel.add(scrollPane_2);
+		
+		table_2 = new JTable();
+		table_2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		Object[] column_2= {"Employee Name", "Phone number"};
+		model1 = new DefaultTableModel();
+		table_2.setModel(model1);
+		model1.setColumnIdentifiers(column_2);
+		final Object[] row3 = new Object[2];
+//		ArrayList<Employdetail> ed = new ArrayList<Employdetail>();
+//		ed = ec.getEmploys();
+//		for(int i=0; i<ed.size();i++) {	
+//			row3[0] = ed.get(i).getName();
+//			row3[1] = "+91 " + ed.get(i).getPhoneNo();
+//			model1.addRow(row3);			
+//		}
+		scrollPane_2.setViewportView(table_2);
+		Employname_field = new JTextField();
+		Employname_field.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 16));
+		Employname_field.setBounds(701, 320, 183, 27);
+		Delivery_boys_Panel.add(Employname_field);
+		Employname_field.setColumns(10);
+		
+		Employ_phone = new JTextField();
+		Employ_phone.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 16));
+		Employ_phone.setColumns(10);
+		Employ_phone.setBounds(701, 413, 183, 27);
+		Delivery_boys_Panel.add(Employ_phone);
+		
+		passwordField_Emloy = new JPasswordField();
+		passwordField_Emloy.setFont(new Font("Tahoma", Font.BOLD, 20));
+		passwordField_Emloy.setBounds(701, 365, 183, 27);
+		Delivery_boys_Panel.add(passwordField_Emloy);
+		
+		JButton Add_employ_button = new JButton("Add");
+//		Add_employ_button.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				Employdetail ee = new Employdetail();
+//				ee.setName(Employname_field.getText());
+//				ee.setPassword(passwordField_Emloy.getText());
+//				ee.setPhoneNo(Employ_phone.getText());
+//				ec.registerEmployes(ee);
+//				row3[0] = Employname_field.getText();
+//				row3[1] = "+91 " + Employ_phone.getText();
+//				model1.addRow(row3);
+//				Employ_phone.setText("");
+//				Employname_field.setText("");
+//				passwordField_Emloy.setText("");
+//				
+//			}
+//		});
+		Add_employ_button.setForeground(Color.WHITE);
+		Add_employ_button.setFont(new Font("Tempus Sans ITC", Font.BOLD, 42));
+		Add_employ_button.setBackground(Color.BLACK);
+		Add_employ_button.setBounds(100, 353, 212, 79);
+		Delivery_boys_Panel.add(Add_employ_button);
+		
+		JLabel lblNewLabel_2 = new JLabel("Employe Name");
+		lblNewLabel_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		lblNewLabel_2.setBounds(477, 308, 183, 50);
+		Delivery_boys_Panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Password");
+		lblNewLabel_2_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		lblNewLabel_2_1.setBounds(477, 353, 183, 50);
+		Delivery_boys_Panel.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2_2 = new JLabel("Phonenumber");
+		lblNewLabel_2_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		lblNewLabel_2_2.setBounds(477, 399, 183, 50);
+		Delivery_boys_Panel.add(lblNewLabel_2_2);
+		
+		
 		
 		JPanel orders_panel = new JPanel();
 		orders_panel.setLayout(null);
@@ -274,7 +409,9 @@ public class Admin_Display_Pages extends JFrame {
 		
 		JButton Display_cust_btn = new JButton("Customers");
 		
+		JButton delivery_boys_btn = new JButton("Delivery Boys");
 		
+		JButton orser_btn = new JButton("Orders");
 		
 		MenuCard_display_btn.setBackground(Color.WHITE);
 		MenuCard_display_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
@@ -285,7 +422,8 @@ public class Admin_Display_Pages extends JFrame {
 				Editmenu_btn.setBackground(Color.ORANGE);
 				Display_cust_btn.setBackground(Color.ORANGE);
 				MenuCard_display_btn.setBackground(new Color(255,255,255));
-				
+				delivery_boys_btn.setBackground(Color.ORANGE);
+				orser_btn.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(MenuCard_display_btn);
@@ -300,6 +438,8 @@ public class Admin_Display_Pages extends JFrame {
 				MenuCard_display_btn.setBackground(Color.ORANGE);
 				Display_cust_btn.setBackground(Color.ORANGE);
 				Editmenu_btn.setBackground(new Color(255,255,255));
+				delivery_boys_btn.setBackground(Color.ORANGE);
+				orser_btn.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(Editmenu_btn);
@@ -314,6 +454,8 @@ public class Admin_Display_Pages extends JFrame {
 				Editmenu_btn.setBackground(Color.ORANGE);
 				MenuCard_display_btn.setBackground(Color.ORANGE);
 				Display_cust_btn.setBackground(new Color(255,255,255));
+				delivery_boys_btn.setBackground(Color.ORANGE);
+				orser_btn.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(Display_cust_btn);
@@ -330,10 +472,15 @@ public class Admin_Display_Pages extends JFrame {
 		img_dis.setBounds(-42, 10, 234, 136);
 		contentPane.add(img_dis);
 		
-		JButton delivery_boys_btn = new JButton("Delivery Boys");
+		
 		delivery_boys_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Delivery_boys_Panel);
+				Editmenu_btn.setBackground(Color.ORANGE);
+				MenuCard_display_btn.setBackground(Color.ORANGE);
+				Display_cust_btn.setBackground(Color.ORANGE);
+				delivery_boys_btn.setBackground(Color.WHITE);
+				orser_btn.setBackground(Color.ORANGE);
 			}
 		});
 		delivery_boys_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
@@ -341,18 +488,21 @@ public class Admin_Display_Pages extends JFrame {
 		delivery_boys_btn.setBounds(546, 88, 280, 48);
 		contentPane.add(delivery_boys_btn);
 		
-		JButton orser_btn = new JButton("Orders");
+		
 		orser_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(orders_panel);
+				Editmenu_btn.setBackground(Color.ORANGE);
+				MenuCard_display_btn.setBackground(Color.ORANGE);
+				Display_cust_btn.setBackground(Color.ORANGE);
+				delivery_boys_btn.setBackground(Color.ORANGE);
+				orser_btn.setBackground(Color.WHITE);
 			}
 		});
 		orser_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
 		orser_btn.setBackground(Color.ORANGE);
 		orser_btn.setBounds(649, 10, 179, 48);
 		contentPane.add(orser_btn);
-		
-		
 
 	}
 }

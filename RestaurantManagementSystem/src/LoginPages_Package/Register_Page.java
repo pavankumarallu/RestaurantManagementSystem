@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Db_Models.Userdetails;
 import db_Connection_Package.UserConnections;
 
 import java.awt.Color;
@@ -180,9 +181,12 @@ public class Register_Page extends JFrame {
 	
 	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt, String user, String pass, String ph) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         
-	//TODO
+		Userdetails uu = new Userdetails();
+		uu.setName(user);
+		uu.setPassword(pass);
+		uu.setPhoneNo(ph);
 		UserConnections uc = new UserConnections();
-		uc.RegisterUser(user, pass, ph);
+		uc.RegisterUser(uu);
 		
 		Admin_Customer_Login acl = new Admin_Customer_Login();
 		acl.setVisible(true);

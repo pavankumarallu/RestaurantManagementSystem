@@ -7,6 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Admin_package.Admin_Display_Pages;
+import Customer_Package.Customer_Display_page;
+//import Db_Models.Employdetail;
+import Db_Models.Userdetails;
+import db_Connection_Package.EmployConnections;
+import db_Connection_Package.UserConnections;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -60,7 +66,7 @@ public class Admin_Customer_Login extends JFrame {
 	private JTextField username_field;
 	private JPasswordField passwordField_1;
 	private JTextField textField_1;
-	private JPasswordField passwordField_2;
+	private JPasswordField Employ_passfield;
 
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
@@ -97,6 +103,8 @@ public class Admin_Customer_Login extends JFrame {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
 		JButton Customer_btn;
 		JButton Admin_btn;
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
 		contentPane = new JPanel();
@@ -170,6 +178,16 @@ public class Admin_Customer_Login extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 			//TODO
+				Userdetails uds = new Userdetails();
+				uds.setName(username_field.getText());
+				uds.setPassword(passwordField_1.getText());
+				try {
+					btnLoginCustomer(evt, uds);
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+				}
+				
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
@@ -232,6 +250,7 @@ public class Admin_Customer_Login extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				//TODO
+				btnAdminLogin(evt,textField.getText(),passwordField.getText());
 			}
 		});
 		btnNewButton.setForeground(new Color(255, 255, 255));
@@ -266,12 +285,27 @@ public class Admin_Customer_Login extends JFrame {
 		textField_1.setBounds(284, 170, 236, 37);
 		employ.add(textField_1);
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setFont(new Font("Verdana", Font.PLAIN, 20));
-		passwordField_2.setBounds(284, 263, 236, 37);
-		employ.add(passwordField_2);
+		Employ_passfield = new JPasswordField();
+		Employ_passfield.setFont(new Font("Verdana", Font.PLAIN, 20));
+		Employ_passfield.setBounds(284, 263, 236, 37);
+		employ.add(Employ_passfield);
 		
 		JButton btnNewButton_3 = new JButton("Login");
+//		btnNewButton_3.addActionListener(new ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				Employdetail ed = new Employdetail();
+//				ed.setName(textField_1.getText());
+//				ed.setPassword(Employ_passfield.getText());
+//				try {
+//					btnemployLogin(evt,ed);
+//				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+//						| UnsupportedLookAndFeelException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		});
 		btnNewButton_3.setForeground(Color.WHITE);
 		btnNewButton_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 33));
 		btnNewButton_3.setBackground(Color.BLACK);
@@ -338,10 +372,55 @@ public class Admin_Customer_Login extends JFrame {
 		contentPane.add(Admin_btn_1);
 	}
 
+	protected void btnAdminLogin(ActionEvent evt, String text, String text2) {
+		// TODO Auto-generated method stub
+		if (text.equals("Admin") && text2.equals("admin")) {
+			try {
+				Admin_Display_Pages adp = new Admin_Display_Pages();
+				adp.setVisible(true);
+				this.dispose();
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	private void btnemployLogin(ActionEvent evt, Employdetail ed) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		EmployConnections ecc = new EmployConnections();
+		boolean i = ecc.EmplyeeLogin(ed);
+		if (i) {
+			Customer_Display_page adp = new Customer_Display_page(ed.getName());
+			adp.setVisible(true);
+			this.dispose();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Incorrect Credentials");
+		}
+		
+	}
+
 	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
     //TODO
 		Register_Page rp = new Register_Page();
 		rp.setVisible(true);
 		this.dispose();
     }
+	private void btnLoginCustomer(final java.awt.event.ActionEvent evt,Userdetails ud) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		UserConnections uc = new UserConnections();
+		boolean i = uc.LoginUser(ud);
+		if (i) {
+			Customer_Display_page cda = new Customer_Display_page(ud.getName());
+			cda.setVisible(true);
+			this.dispose();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Incorrect Username and Password");
+		}
+		
+	}
 }
