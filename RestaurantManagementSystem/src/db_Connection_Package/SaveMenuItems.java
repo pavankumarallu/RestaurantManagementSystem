@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Db_Models.Menu_Items;
+import Db_Models.MenuItems;
 
 public class SaveMenuItems {
 
@@ -27,16 +27,16 @@ public class SaveMenuItems {
 			e.printStackTrace();
 		}
 	}
-	public void setmenu(Menu_Items mi)
+	public void setmenu(MenuItems mi)
 	{
 		String query = "INSERT INTO menuitems(itemname,itemPrice,itemquantity,itemreview) VALUES(?,?,?,?)";
 		PreparedStatement pa;
 		try {
 			pa = connection.prepareStatement(query);
-			pa.setString(1,mi.getItemname());
-			pa.setDouble(2, mi.getItemPrice());
-			pa.setInt(3, mi.getItemquantity());
-			pa.setString(4, mi.getItemreview());
+			pa.setString(1,mi.getItem_name());
+			pa.setDouble(2, mi.getItem_price());
+			pa.setInt(3, mi.getQuantity());
+			pa.setString(4, mi.getReview());
 			pa.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -58,19 +58,19 @@ public class SaveMenuItems {
 		}
 		
 	}
-	public ArrayList<Menu_Items> getmenu() throws SQLException
+	public ArrayList<MenuItems> getmenu() throws SQLException
 	{
-		ArrayList<Menu_Items> mi = new ArrayList<Menu_Items>();
+		ArrayList<MenuItems> mi = new ArrayList<MenuItems>();
 		String query = "SELECT * FROM menuitems";
 		java.sql.Statement st = connection.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		while(rs.next())
 		{
-			Menu_Items m = new Menu_Items();
-			m.setItemname(rs.getString("itemname"));
-			m.setItemPrice(rs.getDouble("itemprice"));
-			m.setItemquantity(rs.getInt("itemquantity"));
-			m.setItemreview(rs.getString("itemreview"));
+			MenuItems m = new MenuItems();
+			m.setItem_name(rs.getString("itemname"));
+			m.setItem_price(rs.getDouble("itemprice"));
+			m.setQuantity(rs.getInt("itemquantity"));
+			m.setReview(rs.getString("itemreview"));
 			mi.add(m);
 		}
 		return mi;

@@ -11,9 +11,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Db_Models.Menu_Items;
+
 import Db_Models.Userdetails;
-import Db_Models.customer_details;
 
 public class UserConnections {
 	static String url = "jdbc:mysql://localhost:3306/restaurantmanagementsystem";

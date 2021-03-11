@@ -10,8 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import Db_Models.Employdetail;
-import Db_Models.Userdetails;
+import Db_Models.EmployeeDetails;
 
 public class EmployConnections {
 	
@@ -28,15 +27,15 @@ public class EmployConnections {
 			e.printStackTrace();
 		}
 	}
-	public void registerEmployes(Employdetail ed)
+	public void registerEmployes(EmployeeDetails ed)
 	{
 		String query = "INSERT INTO emplydetails(employname,password,phonenumber) VALUES(?,?,?)";
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
-			pa.setString(1,ed.getName());
+			pa.setString(1,ed.getname());
 			pa.setString(2,ed.getPassword());
-			pa.setString(3,ed.getPhoneNo());
-			Create_Table(ed.getName());
+			pa.setString(3,ed.getnumber());
+			Create_Table(ed.getname());
 			int i = pa.executeUpdate();
 			if (i>0) {
 				JOptionPane.showMessageDialog(null, "REGISTERED");
@@ -55,9 +54,9 @@ public class EmployConnections {
 			e.printStackTrace();
 		}
 	}
-	public boolean EmplyeeLogin(Employdetail ed)
+	public boolean EmplyeeLogin(EmployeeDetails ed)
 	{
-		String query = "SELECT employname,password FROM emplydetails WHERE employname = '"+ed.getName()+"' and password = '"+ed.getPassword()+"'";
+		String query = "SELECT employname,password FROM emplydetails WHERE employname = '"+ed.getname()+"' and password = '"+ed.getPassword()+"'";
 		
 		java.sql.Statement st;
 		try {
@@ -78,9 +77,9 @@ public class EmployConnections {
 		return false;
 		
 	}
-	public ArrayList<Employdetail> getEmploys()
+	public ArrayList<EmployeeDetails> getEmploys()
 	{
-		ArrayList<Employdetail> usd = new ArrayList<Employdetail>();
+		ArrayList<EmployeeDetails> usd = new ArrayList<EmployeeDetails>();
 		String query = "SELECT * FROM emplydetails";
 		java.sql.Statement st;
 		try {
@@ -88,9 +87,9 @@ public class EmployConnections {
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next())
 			{
-				Employdetail m = new Employdetail();
-				m.setName(rs.getString("employname"));
-				m.setPhoneNo(rs.getString("phonenumber"));
+				EmployeeDetails m = new EmployeeDetails();
+				m.setname(rs.getString("employname"));
+				m.setnumber(rs.getString("phonenumber"));
 				
 				usd.add(m);
 			}

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-
+import Db_Models.MenuItems;
 import LoginPages_Package.Admin_Customer_Login;
 import db_Connection_Package.SaveMenuItems;
 
@@ -74,14 +74,14 @@ public class Customer_Display_page extends JFrame {
 	
 	public Customer_Display_page(String name) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
-//		ArrayList<Menu_Items> menulist1 = new ArrayList<Menu_Items>();
-//		SaveMenuItems smi = new SaveMenuItems();
-//		try {
-//			menulist1 = smi.getmenu();
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		ArrayList<MenuItems> menulist1 = new ArrayList<MenuItems>();
+		SaveMenuItems smi = new SaveMenuItems();
+		try {
+			menulist1 = smi.getmenu();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 //		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -109,11 +109,11 @@ public class Customer_Display_page extends JFrame {
 		menudis.setBounds(94, 22, 846, 435);
 		menudis.append("~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~\n\n");
 		
-//		for(int i=0;i<menulist1.size();i++)
-//		{
-//			
-//			menudis.append("                        "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemPrice()+"\n");
-//		}
+		for(int i=0;i<menulist1.size();i++)
+		{
+			
+			menudis.append("                        "+menulist1.get(i).getItem_name()+"     -------------------------   Rs "+menulist1.get(i).getItem_price()+"\n");
+		}
 		Display_menu_items.add(menudis);
 		
 		JPanel MakeOrder = new JPanel();
@@ -126,10 +126,10 @@ public class Customer_Display_page extends JFrame {
 		Menulist_disp_select.setBackground(Color.WHITE);
 		Menulist_disp_select.setBounds(218, 103, 177, 43);
 		Menulist_disp_select.addItem("Select Item");
-//		for(int i=0;i<menulist1.size();i++)
-//		{
-//			Menulist_disp_select.addItem(menulist1.get(i).getItemname());
-//		}
+		for(int i=0;i<menulist1.size();i++)
+		{
+			Menulist_disp_select.addItem(menulist1.get(i).getItem_name());
+		}
 		
 		MakeOrder.add(Menulist_disp_select);
 		
@@ -168,24 +168,27 @@ public class Customer_Display_page extends JFrame {
 		
 		JButton btnNewButton = new JButton("Add");
 		final Object[] row = new Object[3];
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				String item =  Menulist_disp_select.getSelectedItem().toString();
-//				int quan = Integer.parseInt(quantity_select.getText());
-//				double price_each = smi.getpriceofItem(item);
-//				double ttp = price_each*quan;
-//				
-//				row[0] = item;
-//				row[1] = quan;
-//				row[2] = ttp;
-//				bill = bill+ttp;
-//				
-////				smi.sendData(item, ttp);
-//				
-//				model.addRow(row);
-//				
-//			}
-//		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item =  Menulist_disp_select.getSelectedItem().toString();
+				int quan = Integer.parseInt(quantity_select.getText());
+				double price_each = smi.getpriceofItem(item);
+				double ttp = price_each*quan;
+				
+				row[0] = item;
+				row[1] = quan;
+				row[2] = ttp;
+				bill = bill+ttp;
+				
+//				smi.sendData(item, ttp);
+				
+				model.addRow(row);
+				
+				Menulist_disp_select.setSelectedIndex(0);
+				quantity_select.setText("");
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(Color.BLACK);

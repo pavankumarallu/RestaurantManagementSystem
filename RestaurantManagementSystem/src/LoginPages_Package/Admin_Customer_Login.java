@@ -9,8 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 import Admin_package.Admin_Display_Pages;
 import Customer_Package.Customer_Display_page;
-//import Db_Models.Employdetail;
+import Db_Models.EmployeeDetails;
 import Db_Models.Userdetails;
+import Employee_Package.Employe_Display_Page;
 import db_Connection_Package.EmployConnections;
 import db_Connection_Package.UserConnections;
 
@@ -291,21 +292,25 @@ public class Admin_Customer_Login extends JFrame {
 		employ.add(Employ_passfield);
 		
 		JButton btnNewButton_3 = new JButton("Login");
-//		btnNewButton_3.addActionListener(new ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				Employdetail ed = new Employdetail();
-//				ed.setName(textField_1.getText());
-//				ed.setPassword(Employ_passfield.getText());
-//				try {
-//					btnemployLogin(evt,ed);
-//				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-//						| UnsupportedLookAndFeelException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//		});
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				EmployeeDetails ed = new EmployeeDetails();
+				ed.setname(textField_1.getText());
+				ed.setPassword(Employ_passfield.getText());
+				try {
+					btnemployLogin(evt,ed);
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		btnNewButton_3.setForeground(Color.WHITE);
 		btnNewButton_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 33));
 		btnNewButton_3.setBackground(Color.BLACK);
@@ -388,11 +393,11 @@ public class Admin_Customer_Login extends JFrame {
 		
 	}
 
-	private void btnemployLogin(ActionEvent evt, Employdetail ed) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	private void btnemployLogin(ActionEvent evt, EmployeeDetails ed) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		EmployConnections ecc = new EmployConnections();
 		boolean i = ecc.EmplyeeLogin(ed);
 		if (i) {
-			Customer_Display_page adp = new Customer_Display_page(ed.getName());
+			Employe_Display_Page adp = new Employe_Display_Page(ed.getname());
 			adp.setVisible(true);
 			this.dispose();
 		}

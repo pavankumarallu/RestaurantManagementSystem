@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Db_Models.EmployeeDetails;
+import Db_Models.MenuItems;
 //import Db_Models.Employdetail;
 //import Db_Models.Menu_Items;
 import Db_Models.Userdetails;
@@ -119,19 +121,19 @@ public class Admin_Display_Pages extends JFrame {
 		menuitem_display.setBackground(Color.ORANGE);
 		menuitem_display.setBounds(129, 44, 800, 414);
 		
-//		menuitem_display.append("~~~~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~~~~~\n");
-//		ArrayList<Menu_Items> menulist1  = new ArrayList<Menu_Items>();
-//		try {
-//			menulist1 = smi.getmenu();
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		for(int i=0;i<menulist1.size();i++)
-//		{
-//			menuitem_display.append("                                "+menulist1.get(i).getItemname()+"     -------------------------   Rs "+menulist1.get(i).getItemPrice()+"\n");
-//		}
-//		
+		menuitem_display.append("~~~~~~~~~~~~~~~~~~~~0  MENU CARD  0~~~~~~~~~~~~~~~~~~~~~\n");
+		ArrayList<MenuItems> menulist1  = new ArrayList<MenuItems>();
+		try {
+			menulist1 = smi.getmenu();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(int i=0;i<menulist1.size();i++)
+		{
+			menuitem_display.append("                                "+menulist1.get(i).getItem_name()+"     -------------------------   Rs "+menulist1.get(i).getItem_price()+"\n");
+		}
+		
 		
 		Display_menu.add(menuitem_display);
 		
@@ -160,15 +162,15 @@ public class Admin_Display_Pages extends JFrame {
 		table.setModel(model);
 		model.setColumnIdentifiers(column);
 		final Object[] row = new Object[5];
-//		for(int i=0; i<menulist1.size();i++) {
-//			row[0] = String.valueOf(i+1);
-//			row[1] = menulist1.get(i).getItemname();
-//			row[2] = "Rs " + menulist1.get(i).getItemPrice();
-//			row[3] =  menulist1.get(i).getItemquantity();
-//			row[4] =  menulist1.get(i).getItemreview();
-//			model.addRow(row);
-//			
-//		}
+		for(int i=0; i<menulist1.size();i++) {
+			row[0] = String.valueOf(i+1);
+			row[1] = menulist1.get(i).getItem_name();
+			row[2] = "Rs " + menulist1.get(i).getItem_price();
+			row[3] =  menulist1.get(i).getQuantity();
+			row[4] =  menulist1.get(i).getReview();
+			model.addRow(row);
+			
+		}
 		Item_id = new JTextField();
 		Item_id.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		Item_id.setBounds(699, 298, 163, 26);
@@ -204,38 +206,38 @@ public class Admin_Display_Pages extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton add_btn = new JButton("Add");
-//		add_btn.addActionListener(new ActionListener() {
-////			public void actionPerformed(ActionEvent e) {
-////				//TODO
-////				if (Item_id.getText().equals("")||Item_name.getText().equals("")||Item_Price.getText().equals("")||Item_Review.getText().equals(null)) {
-////					JOptionPane.showMessageDialog(null, "Please fill the Information");
-////				}
-////				else {
-////				row[0] = Item_id.getText();
-////				row[1] = Item_name.getText();
-////				row[2] = Item_Price.getText();
-////				row[3] = item_Quantity.getText();
-////				row[4] = Item_Review.getText();
-////				
-////				Menu_Items m = new Menu_Items();
-////				m.setItemname(Item_name.getText());
-////				double d = Double.parseDouble(Item_Price.getText());
-////				m.setItemPrice(d);
-////				m.setItemreview(Item_Review.getText());
-////				m.setItemquantity(Integer.parseInt(item_Quantity.getText()));
-////				
-////				smi.setmenu(m);
-////				model.addRow(row);
-////				
-////				Item_id.setText("");
-////				Item_name.setText("");
-////				item_Quantity.setText("");
-////				Item_Price.setText("");
-////				Item_Review.setText("");
-////				JOptionPane.showMessageDialog(null, "Saved Successfully");
-////				}
-////			}
-////		});
+		add_btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+				if (Item_id.getText().equals("")||Item_name.getText().equals("")||Item_Price.getText().equals("")||Item_Review.getText().equals(null)) {
+					JOptionPane.showMessageDialog(null, "Please fill the Information");
+				}
+				else {
+				row[0] = Item_id.getText();
+				row[1] = Item_name.getText();
+				row[2] = Item_Price.getText();
+				row[3] = item_Quantity.getText();
+				row[4] = Item_Review.getText();
+				
+				MenuItems m = new MenuItems();
+				m.setItem_name(Item_name.getText());
+				double d = Double.parseDouble(Item_Price.getText());
+				m.setItem_price(d);
+				m.setReview(Item_Review.getText());
+				m.setQuantity(Integer.parseInt(item_Quantity.getText()));
+				
+				smi.setmenu(m);
+				model.addRow(row);
+				
+				Item_id.setText("");
+				Item_name.setText("");
+				item_Quantity.setText("");
+				Item_Price.setText("");
+				Item_Review.setText("");
+				JOptionPane.showMessageDialog(null, "Saved Successfully");
+				}
+			}
+		});
 		add_btn.setBackground(Color.BLACK);
 		add_btn.setFont(new Font("Times New Roman", Font.BOLD, 29));
 		add_btn.setForeground(Color.WHITE);
@@ -331,13 +333,13 @@ public class Admin_Display_Pages extends JFrame {
 		table_2.setModel(model1);
 		model1.setColumnIdentifiers(column_2);
 		final Object[] row3 = new Object[2];
-//		ArrayList<Employdetail> ed = new ArrayList<Employdetail>();
-//		ed = ec.getEmploys();
-//		for(int i=0; i<ed.size();i++) {	
-//			row3[0] = ed.get(i).getName();
-//			row3[1] = "+91 " + ed.get(i).getPhoneNo();
-//			model1.addRow(row3);			
-//		}
+		ArrayList<EmployeeDetails> ed = new ArrayList<EmployeeDetails>();
+		ed = ec.getEmploys();
+		for(int i=0; i<ed.size();i++) {	
+			row3[0] = ed.get(i).getname();
+			row3[1] = "+91 " + ed.get(i).getnumber();
+			model1.addRow(row3);			
+		}
 		scrollPane_2.setViewportView(table_2);
 		Employname_field = new JTextField();
 		Employname_field.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 16));
@@ -357,22 +359,22 @@ public class Admin_Display_Pages extends JFrame {
 		Delivery_boys_Panel.add(passwordField_Emloy);
 		
 		JButton Add_employ_button = new JButton("Add");
-//		Add_employ_button.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				Employdetail ee = new Employdetail();
-//				ee.setName(Employname_field.getText());
-//				ee.setPassword(passwordField_Emloy.getText());
-//				ee.setPhoneNo(Employ_phone.getText());
-//				ec.registerEmployes(ee);
-//				row3[0] = Employname_field.getText();
-//				row3[1] = "+91 " + Employ_phone.getText();
-//				model1.addRow(row3);
-//				Employ_phone.setText("");
-//				Employname_field.setText("");
-//				passwordField_Emloy.setText("");
-//				
-//			}
-//		});
+		Add_employ_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EmployeeDetails ee = new EmployeeDetails();
+				ee.setname(Employname_field.getText());
+				ee.setPassword(passwordField_Emloy.getText());
+				ee.setnumber(Employ_phone.getText());
+				ec.registerEmployes(ee);
+				row3[0] = Employname_field.getText();
+				row3[1] = "+91 " + Employ_phone.getText();
+				model1.addRow(row3);
+				Employ_phone.setText("");
+				Employname_field.setText("");
+				passwordField_Emloy.setText("");
+				
+			}
+		});
 		Add_employ_button.setForeground(Color.WHITE);
 		Add_employ_button.setFont(new Font("Tempus Sans ITC", Font.BOLD, 42));
 		Add_employ_button.setBackground(Color.BLACK);
