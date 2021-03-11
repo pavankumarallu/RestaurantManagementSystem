@@ -10,11 +10,13 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Db_Models.Admin_model;
 import Db_Models.EmployeeDetails;
 import Db_Models.MenuItems;
 //import Db_Models.Employdetail;
 //import Db_Models.Menu_Items;
 import Db_Models.Userdetails;
+import db_Connection_Package.Admin_db;
 //import Db_Models.customer_details;
 import db_Connection_Package.EmployConnections;
 import db_Connection_Package.SaveMenuItems;
@@ -26,11 +28,13 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JSpinner.DateEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -40,6 +44,7 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JPasswordField;
+import javax.swing.JComboBox;
 
 public class Admin_Display_Pages extends JFrame {
 
@@ -59,6 +64,7 @@ public class Admin_Display_Pages extends JFrame {
 	private JTextField Employname_field;
 	private JTextField Employ_phone;
 	private JPasswordField passwordField_Emloy;
+	private JTable table_3;
 	/**
 	 * Launch the application.
 	 */
@@ -96,6 +102,7 @@ public class Admin_Display_Pages extends JFrame {
 		SaveMenuItems smi = new SaveMenuItems();
 		UserConnections uc =  new UserConnections();
 		EmployConnections ec = new EmployConnections();
+		Admin_db adb = new Admin_db();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -402,6 +409,73 @@ public class Admin_Display_Pages extends JFrame {
 		orders_panel.setLayout(null);
 		orders_panel.setBackground(Color.ORANGE);
 		layeredPane.add(orders_panel, "name_18520568449000");
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(64, 97, 941, 231);
+		orders_panel.add(scrollPane_3);
+		
+		table_3 = new JTable();
+		table_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		Object[] column3 = { "Date","Customer Name","Item Name","Item Quantity","Delivery Boy","Delivary Status"};
+		DefaultTableModel model4 = new DefaultTableModel();
+		table_3.setModel(model4);
+		model4.setColumnIdentifiers(column3);
+		final Object[] row4 = new Object[5];
+		ArrayList<Admin_model> am = new ArrayList<Admin_model>();
+		am = adb.getorders();
+		for(int i=0; i<am.size();i++) {	
+			row4[0] = am.get(i).getDate().toString();
+			row4[1] = am.get(i).getCustomer_name();
+			row4[2] = am.get(i).getItemname();
+			row4[3] = am.get(i).getQuantity();
+			row4[4] = am.get(i).getDelivery_boy();
+			
+			model4.addRow(row4);			
+		}
+		
+		scrollPane_3.setViewportView(table_3);
+		
+		JLabel lblNewLabel_3 = new JLabel("Assign Orders");
+		lblNewLabel_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 29));
+		lblNewLabel_3.setBounds(398, 27, 197, 46);
+		orders_panel.add(lblNewLabel_3);
+		
+		JComboBox comboBox = new JComboBox();
+		
+		comboBox.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setBounds(325, 395, 191, 40);
+		comboBox.addItem("Select");
+		for(int i=0; i<ed.size();i++) {	
+			comboBox.addItem(ed.get(i).getname());	
+		}
+		orders_panel.add(comboBox);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("Delivery Boys");
+		lblNewLabel_3_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 29));
+		lblNewLabel_3_1.setBounds(100, 391, 197, 46);
+		orders_panel.add(lblNewLabel_3_1);
+		
+		JButton btnNewButton = new JButton("Assign");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int ii = table_3.getSelectedRow();
+				String customer_name = table_3.getModel().getValueAt(ii, 1).toString();
+//				Date date = (Date) table_3.getModel().getValueAt(ii, 0);
+				String Deliveryboy = comboBox.getSelectedItem().toString();
+				String Itemname = table_3.getModel().getValueAt(ii, 2).toString();
+				int quant =Integer.valueOf(table_3.getModel().getValueAt(ii, 3).toString()) ;
+				adb.assignOrders(customer_name,Deliveryboy,Itemname,quant);
+				table_3.getModel().setValueAt(Deliveryboy, ii, 4);
+				
+				
+			}
+		});
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(Color.BLACK);
+		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 30));
+		btnNewButton.setBounds(598, 366, 173, 97);
+		orders_panel.add(btnNewButton);
 		
 		
 		

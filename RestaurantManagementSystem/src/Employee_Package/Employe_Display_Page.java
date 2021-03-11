@@ -11,10 +11,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Db_Models.EmployeeEach;
+import db_Connection_Package.Employee_db;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -23,6 +28,7 @@ public class Employe_Display_Page extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	
 
 	/**
 	 * Launch the application.
@@ -48,6 +54,9 @@ public class Employe_Display_Page extends JFrame {
 	 * @throws ClassNotFoundException 
 	 */
 	public Employe_Display_Page(String Name) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		
+		Employee_db edb = new Employee_db(Name);
+		
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -96,7 +105,19 @@ public class Employe_Display_Page extends JFrame {
 		Object[] column = {"Customer Name", "Phone No.", "Item Name", "Item Quantity"};
 		DefaultTableModel model = new DefaultTableModel();
 		table.setModel(model);
+		final Object[] row = new Object[4];
+		
+		ArrayList<EmployeeEach> eelist = new ArrayList<EmployeeEach>();
+		eelist = edb.getmyOrders();
+		
 		model.setColumnIdentifiers(column);
+		for(int i=0; i<eelist.size();i++) {
+			row[0] = eelist.get(i).getcustomer_name();
+			row[1] = eelist.get(i).getcust_ph_no();
+			row[2] = eelist.get(i).getmenu_item();
+			row[3] =  eelist.get(i).getquantity();
+			model.addRow(row);
+		}
 		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel_1 = new JLabel("Assigned Orders");

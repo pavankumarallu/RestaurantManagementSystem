@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
+import Db_Models.Admin_model;
 import Db_Models.CustomerEach;
 
 public class CustomerConnections {
@@ -28,6 +29,7 @@ public class CustomerConnections {
 		String query = "INSERT INTO "+Customername+"(itemname,date,itemrate,itemquantity) VALUES(?,?,?,?)";
 		Date date = new Date();
 		java.sql.Date sqldate;
+		Admin_model am = new Admin_model();
 		sqldate = new java.sql.Date(date.getTime());
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
@@ -40,7 +42,30 @@ public class CustomerConnections {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		am.setCustomer_name(Customername);
+		am.setItemname(ce.getitem_name());
+		am.setQuantity(ce.getquantity());
+		addAdmin(am);
 	}
+	private void addAdmin(Admin_model am)
+	{
+		String query = "INSERT INTO admin(Customername,menuitem,date,quantity) VALUES(?,?,?,?)";
+		Date date = new Date();
+		java.sql.Date sqldate;
+		sqldate = new java.sql.Date(date.getTime());
+		try {
+			PreparedStatement pa = connection.prepareStatement(query);
+			pa.setString(1,am.getCustomer_name());
+			pa.setString(2, am.getItemname());
+			pa.setDate(3, sqldate);
+			pa.setInt(4, am.getQuantity());
+			pa.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 
 }
