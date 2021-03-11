@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Db_Models.CustomerEach;
 import Db_Models.MenuItems;
 import LoginPages_Package.Admin_Customer_Login;
+import db_Connection_Package.CustomerConnections;
 import db_Connection_Package.SaveMenuItems;
 
 import javax.swing.JLabel;
@@ -82,6 +84,7 @@ public class Customer_Display_page extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		CustomerConnections cc = new CustomerConnections(name);
 //		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
@@ -180,7 +183,12 @@ public class Customer_Display_page extends JFrame {
 				row[2] = ttp;
 				bill = bill+ttp;
 				
-//				smi.sendData(item, ttp);
+				CustomerEach ce = new CustomerEach();
+				ce.setitem_name(item);
+				ce.setitem_price(ttp);
+				ce.setquantity(quan);
+				
+				cc.MakeOrder(ce);
 				
 				model.addRow(row);
 				

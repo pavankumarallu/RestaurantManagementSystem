@@ -53,13 +53,13 @@ public class UserConnections {
 
 	private void Create_Table(String Username) {
 		// TODO Auto-generated method stub
-		String query = "CREATE TABLE "+Username+"(Id int(20) primary key auto_increment,itemname varchar(200),date date,itemrate double,itemquantity int)";
+		String query = "CREATE TABLE "+Username+"(Id int(20) primary key auto_increment,itemname varchar(200),date date,itemrate double,itemquantity int,Delivaryboy varchar(200),orderStatus tinyint DEFAULT False,Deliverystatus tinyint DEFAULT False)";
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
 			stmt.execute(query);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.toString());
+			e.printStackTrace();
 		}
 		
 	}
