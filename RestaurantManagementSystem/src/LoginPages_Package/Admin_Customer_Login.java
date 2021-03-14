@@ -56,9 +56,6 @@ import javax.swing.JPasswordField;
 
 public class Admin_Customer_Login extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLayeredPane layeredPane;
@@ -247,18 +244,18 @@ public class Admin_Customer_Login extends JFrame {
 		passwordField.setBounds(284, 263, 236, 37);
 		Admin.add(passwordField);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton Admin_display_login = new JButton("Login");
+		Admin_display_login.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				//TODO
 				btnAdminLogin(evt,textField.getText(),passwordField.getText());
 			}
 		});
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 33));
-		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setBounds(241, 403, 193, 67);
-		Admin.add(btnNewButton);
+		Admin_display_login.setForeground(new Color(255, 255, 255));
+		Admin_display_login.setFont(new Font("Tempus Sans ITC", Font.BOLD, 33));
+		Admin_display_login.setBackground(Color.BLACK);
+		Admin_display_login.setBounds(241, 403, 193, 67);
+		Admin.add(Admin_display_login);
 		
 		JPanel employ = new JPanel();
 		employ.setLayout(null);
@@ -307,6 +304,7 @@ public class Admin_Customer_Login extends JFrame {
 						| UnsupportedLookAndFeelException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					
 				}
 				
 			}
@@ -374,10 +372,11 @@ public class Admin_Customer_Login extends JFrame {
 		Admin_btn_1.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 35));
 		Admin_btn_1.setBackground(Color.BLACK);
 		Admin_btn_1.setBounds(851, 26, 176, 55);
+		
 		contentPane.add(Admin_btn_1);
 	}
 
-	protected void btnAdminLogin(ActionEvent evt, String text, String text2) {
+	private void btnAdminLogin(ActionEvent evt, String text, String text2) {
 		// TODO Auto-generated method stub
 		if (text.equals("Admin") && text2.equals("admin")) {
 			try {

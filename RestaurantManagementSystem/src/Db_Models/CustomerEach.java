@@ -6,8 +6,32 @@ public class CustomerEach {
 	String item_name;
 	int quantity;
 	double item_price;
+	String delivaryboy;
 	Date date;
+	boolean Orderstatus;
+	boolean DelivaryStatus;
 	
+	public void setDelivaryStatus(boolean delivaryStatus) {
+		DelivaryStatus = delivaryStatus;
+	}
+	public void setOrderstatus(boolean orderstatus) {
+		Orderstatus = orderstatus;
+	}
+	public boolean getDelivaryStatus()
+	{
+		return DelivaryStatus;
+	}
+	public boolean getOrderstatus()
+	{
+		return Orderstatus;
+	}
+	
+	public String getDelivaryboy() {
+		return delivaryboy;
+	}
+	public void setDelivaryboy(String delivaryboy) {
+		this.delivaryboy = delivaryboy;
+	}
 	public void setitem_name(String item_name) {
 		this.item_name = item_name;
 	}

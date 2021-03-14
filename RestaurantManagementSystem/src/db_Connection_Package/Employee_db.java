@@ -2,9 +2,12 @@ package db_Connection_Package;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import Db_Models.EmployeeEach;
 import Db_Models.MenuItems;
@@ -52,5 +55,45 @@ public class Employee_db {
 		
 		
 
+	}
+
+	public void removedb(String itemname, String phone, String custname) {
+		String query = "DELETE from "+ Employeename+" where itemname = '"+itemname+"' AND customername= '"+custname+"'";
+		try {
+			PreparedStatement pa = connection.prepareStatement(query);
+			pa.execute();
+			JOptionPane.showMessageDialog(null, "Delivered");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		removefromAdmin(itemname,custname);
+		updatedeliverystatus(custname,itemname);
+		
+	}
+
+	private void updatedeliverystatus(String custname,String itemname) {
+		String query = "UPDATE "+custname+" SET Deliverystatus = True WHERE itemname= '"+itemname+"' AND Delivaryboy='"+Employeename+"'";
+		try {
+			PreparedStatement pa = connection.prepareStatement(query);
+			pa.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void removefromAdmin(String itemname, String custname) {
+		String query = "DELETE from admin where menuitem = '"+itemname+"' AND Customername= '"+custname+"'";
+		try {
+			PreparedStatement pa = connection.prepareStatement(query);
+			pa.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

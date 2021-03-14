@@ -56,8 +56,7 @@ public class Admin_db {
 		
 	}
 	
-	public void assignOrders(String customer_name, String deliveryboy, String itemname,int quantity) {
-		Date date = new Date();
+	public void assignOrders(String customer_name, String deliveryboy,Date date ,String itemname,int quantity) {
 		java.sql.Date sqldate = new java.sql.Date(date.getTime());
 		String query = "UPDATE admin SET Delivaryboy='"+deliveryboy+"' WHERE Customername = '"+customer_name+"' AND menuitem = '"+itemname+"' AND date= '"+sqldate+"'";
 		try {
@@ -75,9 +74,20 @@ public class Admin_db {
 		eee.setmenu_item(itemname);
 		eee.setquantity(quantity);
 		assigntoEmploy(eee,deliveryboy);
+		OrderStatus(customer_name,deliveryboy,itemname,sqldate);
 		
 	}
 	
+	private void OrderStatus(String customer_name, String deliveryboy, String itemname, java.sql.Date sqldate) {
+		String query = "UPDATE "+customer_name+" SET orderStatus=True , Delivaryboy='"+deliveryboy+"' WHERE itemname = '"+itemname+"' AND date= '"+sqldate+"'";
+		try {
+			PreparedStatement pa = connection.prepareStatement(query);
+			pa.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private String getPhoneNumber(String name)
 	{
 		String query = "SELECT Phonenumber FROM Userdetails WHERE Username='"+name+"'";
@@ -86,7 +96,9 @@ public class Admin_db {
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
 			ph = rs.getString("Phonenumber");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.toString());

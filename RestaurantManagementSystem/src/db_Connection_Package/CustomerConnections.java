@@ -3,11 +3,15 @@ package db_Connection_Package;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Db_Models.Admin_model;
 import Db_Models.CustomerEach;
+import Db_Models.EmployeeEach;
+import Db_Models.MenuItems;
 
 public class CustomerConnections {
 	static String url = "jdbc:mysql://localhost:3306/restaurantmanagementsystem";
@@ -65,7 +69,62 @@ public class CustomerConnections {
 		}
 		
 	}
-	
+	public ArrayList<CustomerEach> getTrackdetails()
+	{
+		Date date = new Date();
+		java.sql.Date sqldate= new java.sql.Date(date.getTime());
+		ArrayList<CustomerEach>	celist = new ArrayList<CustomerEach>();
+		String query = "SELECT * FROM "+Customername+" WHERE date = '"+sqldate+"'";
+		java.sql.Statement st;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next())
+			{
+				CustomerEach m = new CustomerEach();
+				m.setitem_name(rs.getString("itemname"));
+				m.setquantity(rs.getInt("itemquantity"));
+				m.setDelivaryboy(rs.getString("Delivaryboy"));
+				m.setOrderstatus(rs.getBoolean("orderStatus"));
+				m.setDelivaryStatus(rs.getBoolean("DeliveryStatus"));
+				celist.add(m);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return celist;
+		
+	}
+	public ArrayList<CustomerEach> getHistory()
+	{
+		ArrayList<CustomerEach>	celist = new ArrayList<CustomerEach>();
+		String query = "SELECT * FROM "+Customername+"";
+		java.sql.Statement st;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next())
+			{
+				CustomerEach m = new CustomerEach();
+				m.setitem_name(rs.getString("itemname"));
+				m.setquantity(rs.getInt("itemquantity"));
+				m.setDelivaryboy(rs.getString("Delivaryboy"));
+				m.setOrderstatus(rs.getBoolean("orderStatus"));
+				m.setDelivaryStatus(rs.getBoolean("DeliveryStatus"));
+				celist.add(m);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return celist;
+		
+	}
 	
 
 }

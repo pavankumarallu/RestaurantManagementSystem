@@ -33,6 +33,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -65,21 +67,6 @@ public class Admin_Display_Pages extends JFrame {
 	private JTextField Employ_phone;
 	private JPasswordField passwordField_Emloy;
 	private JTable table_3;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Admin_Display_Pages frame = new Admin_Display_Pages();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public void switchPanels(JPanel jPanel)
 	{
@@ -460,13 +447,23 @@ public class Admin_Display_Pages extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ii = table_3.getSelectedRow();
+				Date date;
 				String customer_name = table_3.getModel().getValueAt(ii, 1).toString();
-//				Date date = (Date) table_3.getModel().getValueAt(ii, 0);
-				String Deliveryboy = comboBox.getSelectedItem().toString();
-				String Itemname = table_3.getModel().getValueAt(ii, 2).toString();
-				int quant =Integer.valueOf(table_3.getModel().getValueAt(ii, 3).toString()) ;
-				adb.assignOrders(customer_name,Deliveryboy,Itemname,quant);
-				table_3.getModel().setValueAt(Deliveryboy, ii, 4);
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String dd = table_3.getModel().getValueAt(ii, 0).toString();
+				try {
+					date = formatter.parse(dd);
+					String Deliveryboy = comboBox.getSelectedItem().toString();
+					String Itemname = table_3.getModel().getValueAt(ii, 2).toString();
+					int quant =Integer.valueOf(table_3.getModel().getValueAt(ii, 3).toString()) ;
+					adb.assignOrders(customer_name,Deliveryboy,date,Itemname,quant);
+					table_3.getModel().setValueAt(Deliveryboy, ii, 4);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 				
 				
 			}

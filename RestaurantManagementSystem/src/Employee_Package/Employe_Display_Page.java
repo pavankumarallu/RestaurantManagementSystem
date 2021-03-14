@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Employe_Display_Page extends JFrame {
 
@@ -91,6 +93,7 @@ public class Employe_Display_Page extends JFrame {
 		panel.add(lblHi);
 		
 		JButton btnNewButton = new JButton("DONE");
+		
 		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 30));
 		btnNewButton.setBackground(Color.BLACK);
 		btnNewButton.setForeground(Color.WHITE);
@@ -123,6 +126,20 @@ public class Employe_Display_Page extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Assigned Orders");
 		lblNewLabel_1.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 38));
 		lblNewLabel_1.setBounds(374, 204, 301, 52);
+		
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int ii = table.getSelectedRow();
+				String Phone = table.getModel().getValueAt(ii, 1).toString();
+				String itemname = table.getModel().getValueAt(ii, 2).toString();
+				String custname = table.getModel().getValueAt(ii, 0).toString();
+				model.removeRow(ii);
+				edb.removedb(itemname,Phone,custname);
+				
+				
+			}
+		});
 		contentPane.add(lblNewLabel_1);
 	}
 }

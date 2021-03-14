@@ -35,22 +35,6 @@ public class Register_Page extends JFrame {
 	private JPasswordField RepasswordField_1;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Register_Page frame = new Register_Page();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
 	 * @throws IllegalAccessException 
