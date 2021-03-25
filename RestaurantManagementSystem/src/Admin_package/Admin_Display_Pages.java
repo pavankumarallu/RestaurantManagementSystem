@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import Db_Models.Admin_model;
 import Db_Models.EmployeeDetails;
 import Db_Models.MenuItems;
+import Db_Models.SuggestionModel;
 //import Db_Models.Employdetail;
 //import Db_Models.Menu_Items;
 import Db_Models.Userdetails;
@@ -21,6 +22,7 @@ import db_Connection_Package.Admin_db;
 //import Db_Models.customer_details;
 import db_Connection_Package.EmployConnections;
 import db_Connection_Package.SaveMenuItems;
+import db_Connection_Package.Suggestions_db;
 import db_Connection_Package.UserConnections;
 
 import java.awt.Font;
@@ -68,6 +70,7 @@ public class Admin_Display_Pages extends JFrame {
 	private JTextField Employ_phone;
 	private JPasswordField passwordField_Emloy;
 	private JTable table_3;
+	private JTable table_4;
 	
 	public void switchPanels(JPanel jPanel)
 	{
@@ -91,6 +94,7 @@ public class Admin_Display_Pages extends JFrame {
 		UserConnections uc =  new UserConnections();
 		EmployConnections ec = new EmployConnections();
 		Admin_db adb = new Admin_db();
+		Suggestions_db sdb = new Suggestions_db();
 		
 		setTitle("ADMIN PAGE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -314,18 +318,18 @@ public class Admin_Display_Pages extends JFrame {
 		
 		
 		table_1 = new JTable();
-		table_1.setFont(new Font("Times New Roman", Font.PLAIN, 21));
+		table_1.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		
-		Object[] column2 = {"Customer Name", "Phone Number"};
+		Object[] column2 = {"Customer Name", "Suggestions"};
 		model2 = new DefaultTableModel();
 		table_1.setModel(model2);
 		model2.setColumnIdentifiers(column2);
 		final Object[] row2 = new Object[2];
-		ArrayList<Userdetails> cl = new ArrayList<Userdetails>();
-		cl = uc.getUsers();
+		ArrayList<SuggestionModel> cl = new ArrayList<SuggestionModel>();
+		cl = sdb.getSuggestions();
 		for(int i=0; i<cl.size();i++) {	
-			row2[0] = cl.get(i).getName();
-			row2[1] = "+91 " + cl.get(i).getPhoneNo();
+			row2[0] = cl.get(i).getCustomername();
+			row2[1] = cl.get(i).getSuggestion();
 			model2.addRow(row2);			
 		}
 		
@@ -495,17 +499,35 @@ public class Admin_Display_Pages extends JFrame {
 		btnNewButton.setBounds(598, 366, 173, 97);
 		orders_panel.add(btnNewButton);
 		
+		JPanel Complaints_panel = new JPanel();
+		Complaints_panel.setBackground(Color.ORANGE);
+		layeredPane.add(Complaints_panel, "name_3987503755300");
+		Complaints_panel.setLayout(null);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(21, 45, 1015, 306);
+		Complaints_panel.add(scrollPane_4);
+		
+		table_4 = new JTable();
+		Object[] column5 = { "Customer Name","Complaint"};
+		DefaultTableModel model5 = new DefaultTableModel();
+		table_4.setModel(model5);
+		model5.setColumnIdentifiers(column5);
+		scrollPane_4.setViewportView(table_4);
+		
 		
 		
 		JButton MenuCard_display_btn = new JButton("Menu card");
 		
 		JButton Editmenu_btn = new JButton("Edit Menu");
 		
-		JButton Display_cust_btn = new JButton("Customers");
+		JButton Display_cust_btn = new JButton("Customer Suggestions");
 		
 		JButton delivery_boys_btn = new JButton("Delivery Boys");
 		
 		JButton orser_btn = new JButton("Orders");
+		
+		JButton orser_btn_1 = new JButton("Complaints");
 		
 		MenuCard_display_btn.setBackground(Color.WHITE);
 		MenuCard_display_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
@@ -518,6 +540,7 @@ public class Admin_Display_Pages extends JFrame {
 				MenuCard_display_btn.setBackground(new Color(255,255,255));
 				delivery_boys_btn.setBackground(Color.ORANGE);
 				orser_btn.setBackground(Color.ORANGE);
+				orser_btn_1.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(MenuCard_display_btn);
@@ -525,7 +548,7 @@ public class Admin_Display_Pages extends JFrame {
 		
 		Editmenu_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
 		Editmenu_btn.setBackground(Color.ORANGE);
-		Editmenu_btn.setBounds(219, 88, 280, 48);
+		Editmenu_btn.setBounds(219, 88, 179, 48);
 		Editmenu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Edit_menu);
@@ -534,14 +557,15 @@ public class Admin_Display_Pages extends JFrame {
 				Editmenu_btn.setBackground(new Color(255,255,255));
 				delivery_boys_btn.setBackground(Color.ORANGE);
 				orser_btn.setBackground(Color.ORANGE);
+				orser_btn_1.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(Editmenu_btn);
 		
 		
-		Display_cust_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
+		Display_cust_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 17));
 		Display_cust_btn.setBackground(Color.ORANGE);
-		Display_cust_btn.setBounds(438, 10, 179, 48);
+		Display_cust_btn.setBounds(438, 10, 187, 48);
 		Display_cust_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(Customer_list);
@@ -550,6 +574,7 @@ public class Admin_Display_Pages extends JFrame {
 				Display_cust_btn.setBackground(new Color(255,255,255));
 				delivery_boys_btn.setBackground(Color.ORANGE);
 				orser_btn.setBackground(Color.ORANGE);
+				orser_btn_1.setBackground(Color.ORANGE);
 			}
 		});
 		contentPane.add(Display_cust_btn);
@@ -575,11 +600,12 @@ public class Admin_Display_Pages extends JFrame {
 				Display_cust_btn.setBackground(Color.ORANGE);
 				delivery_boys_btn.setBackground(Color.WHITE);
 				orser_btn.setBackground(Color.ORANGE);
+				orser_btn_1.setBackground(Color.ORANGE);
 			}
 		});
 		delivery_boys_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
 		delivery_boys_btn.setBackground(Color.ORANGE);
-		delivery_boys_btn.setBounds(546, 88, 280, 48);
+		delivery_boys_btn.setBounds(438, 88, 179, 48);
 		contentPane.add(delivery_boys_btn);
 		
 		
@@ -591,6 +617,7 @@ public class Admin_Display_Pages extends JFrame {
 				Display_cust_btn.setBackground(Color.ORANGE);
 				delivery_boys_btn.setBackground(Color.ORANGE);
 				orser_btn.setBackground(Color.WHITE);
+				orser_btn_1.setBackground(Color.ORANGE);
 			}
 		});
 		orser_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
@@ -608,6 +635,23 @@ public class Admin_Display_Pages extends JFrame {
 		btnNewButton_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 21));
 		btnNewButton_1.setBounds(896, 78, 108, 39);
 		contentPane.add(btnNewButton_1);
+		
+		
+		orser_btn_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(Complaints_panel);
+				Editmenu_btn.setBackground(Color.ORANGE);
+				MenuCard_display_btn.setBackground(Color.ORANGE);
+				Display_cust_btn.setBackground(Color.ORANGE);
+				delivery_boys_btn.setBackground(Color.ORANGE);
+				orser_btn.setBackground(Color.ORANGE);
+				orser_btn_1.setBackground(Color.WHITE);
+			}
+		});
+		orser_btn_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
+		orser_btn_1.setBackground(Color.ORANGE);
+		orser_btn_1.setBounds(649, 88, 179, 48);
+		contentPane.add(orser_btn_1);
 
 	}
 

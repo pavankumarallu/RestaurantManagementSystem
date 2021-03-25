@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Customer_Package.Customer_Display_page;
+import Suggest_package.Suggestions;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -74,6 +78,7 @@ public class Support extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
 		textArea.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		textArea.setBackground(Color.ORANGE);
 		scrollPane.setViewportView(textArea);
@@ -298,9 +303,24 @@ public class Support extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton_1 = new JButton("Back");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				backtoSuggestions(e,name);
+			}
+		});
 		btnNewButton_1.setBackground(Color.WHITE);
 		btnNewButton_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		btnNewButton_1.setBounds(1195, 26, 97, 28);
 		contentPane.add(btnNewButton_1);
+	}
+
+	private void backtoSuggestions(ActionEvent e, String name) {
+		// TODO Auto-generated method stub
+		Suggestions cdp;
+			cdp = new Suggestions(name);
+			cdp.setVisible(true);
+			this.dispose();
+	
+		
 	}
 }

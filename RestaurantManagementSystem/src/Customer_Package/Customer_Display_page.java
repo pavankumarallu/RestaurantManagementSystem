@@ -14,6 +14,7 @@ import Db_Models.CustomerEach;
 import Db_Models.EmployeeEach;
 import Db_Models.MenuItems;
 import LoginPages_Package.Admin_Customer_Login;
+import Suggest_package.Suggestions;
 import bill_package.Bill_Section;
 import db_Connection_Package.CustomerConnections;
 import db_Connection_Package.SaveMenuItems;
@@ -405,12 +406,25 @@ public class Customer_Display_page extends JFrame {
 		contentPane.add(Supports);
 		
 		JButton btnRateUs = new JButton("Rate us");
+		btnRateUs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				taketorate(e,name);
+			}
+		});
 		btnRateUs.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
 		btnRateUs.setBackground(Color.ORANGE);
 		btnRateUs.setBounds(601, 93, 229, 55);
 		contentPane.add(btnRateUs);
 	}
 	
+private void taketorate(ActionEvent e, String name) {
+		// TODO Auto-generated method stub
+	Suggestions s = new Suggestions(name);
+	s.setVisible(true);
+	this.dispose();
+		
+	}
+
 private void btnsupport(ActionEvent e, String name) {
 		Support s = new Support(name);
 		s.setVisible(true);

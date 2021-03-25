@@ -290,10 +290,7 @@ public class Admin_Customer_Login extends JFrame {
 		employ.add(Employ_passfield);
 		
 		JButton btnNewButton_3 = new JButton("Login");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				EmployeeDetails ed = new EmployeeDetails();
