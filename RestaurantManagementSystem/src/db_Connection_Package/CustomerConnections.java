@@ -30,22 +30,10 @@ public class CustomerConnections {
 	}
 	public void MakeOrder(CustomerEach ce)
 	{
-		String query = "INSERT INTO "+Customername+"(itemname,date,itemrate,itemquantity) VALUES(?,?,?,?)";
 		Date date = new Date();
 		java.sql.Date sqldate;
 		Admin_model am = new Admin_model();
-		sqldate = new java.sql.Date(date.getTime());
-		try {
-			PreparedStatement pa = connection.prepareStatement(query);
-			pa.setString(1,ce.getitem_name());
-			pa.setDate(2, sqldate);
-			pa.setDouble(3, ce.getItem_price());
-			pa.setInt(4, ce.getquantity());
-			pa.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		am.setItemrate(ce.getItem_price());
 		am.setCustomer_name(Customername);
 		am.setItemname(ce.getitem_name());
 		am.setQuantity(ce.getquantity());
@@ -74,7 +62,7 @@ public class CustomerConnections {
 		Date date = new Date();
 		java.sql.Date sqldate= new java.sql.Date(date.getTime());
 		ArrayList<CustomerEach>	celist = new ArrayList<CustomerEach>();
-		String query = "SELECT * FROM "+Customername+" WHERE date = '"+sqldate+"'";
+		String query = "SELECT * FROM admin WHERE date = '"+sqldate+"' AND Customername = '"+Customername+"'";
 		java.sql.Statement st;
 		try {
 			st = connection.createStatement();
@@ -82,11 +70,11 @@ public class CustomerConnections {
 			while(rs.next())
 			{
 				CustomerEach m = new CustomerEach();
-				m.setitem_name(rs.getString("itemname"));
-				m.setquantity(rs.getInt("itemquantity"));
+				m.setitem_name(rs.getString("menuitem"));
+				m.setquantity(rs.getInt("quantity"));
 				m.setDelivaryboy(rs.getString("Delivaryboy"));
-				m.setOrderstatus(rs.getBoolean("orderStatus"));
-				m.setDelivaryStatus(rs.getBoolean("DeliveryStatus"));
+				m.setOrderstatus(rs.getBoolean("OrderStatus"));
+				m.setDelivaryStatus(rs.getBoolean("delivaryStatus"));
 				celist.add(m);
 				
 			}
@@ -101,7 +89,7 @@ public class CustomerConnections {
 	public ArrayList<CustomerEach> getHistory()
 	{
 		ArrayList<CustomerEach>	celist = new ArrayList<CustomerEach>();
-		String query = "SELECT * FROM "+Customername+"";
+		String query = "SELECT * FROM admin WHERE Customername = '"+Customername+"'";
 		java.sql.Statement st;
 		try {
 			st = connection.createStatement();
@@ -109,11 +97,11 @@ public class CustomerConnections {
 			while(rs.next())
 			{
 				CustomerEach m = new CustomerEach();
-				m.setitem_name(rs.getString("itemname"));
-				m.setquantity(rs.getInt("itemquantity"));
+				m.setitem_name(rs.getString("menuitem"));
+				m.setquantity(rs.getInt("quantity"));
 				m.setDelivaryboy(rs.getString("Delivaryboy"));
-				m.setOrderstatus(rs.getBoolean("orderStatus"));
-				m.setDelivaryStatus(rs.getBoolean("DeliveryStatus"));
+				m.setOrderstatus(rs.getBoolean("OrderStatus"));
+				m.setDelivaryStatus(rs.getBoolean("delivaryStatus"));
 				celist.add(m);
 				
 			}
@@ -123,6 +111,48 @@ public class CustomerConnections {
 		}
 		
 		return celist;
+		
+	}
+	public ArrayList<MenuItems> getmenuPref() throws SQLException
+	{
+		ArrayList<MenuItems> mi = new ArrayList<MenuItems>();
+		String pref = getPref();
+		String query;
+		if (pref.equals("Veg")) {
+			query = "SELECT * FROM menuitems WHERE type = 'Veg'";
+		}
+		else {
+			query = "SELECT * FROM menuitems";
+		}
+		java.sql.Statement st = connection.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next())
+		{
+			MenuItems m = new MenuItems();
+			m.setItem_name(rs.getString("itemname"));
+			m.setItem_price(rs.getDouble("itemprice"));
+			m.setQuantity(rs.getInt("itemquantity"));
+			m.setReview(rs.getString("itemreview"));
+			mi.add(m);
+		}
+		return mi;
+	}
+	private String getPref() {
+		String query = "SELECT * FROM userdetails WHERE Username = '"+Customername+"'";
+		String pref = "";
+		java.sql.Statement st;
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while(rs.next())
+			{
+				pref = rs.getString("Preferences");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pref;
 		
 	}
 	

@@ -35,7 +35,7 @@ public class EmployConnections {
 			pa.setString(1,ed.getname());
 			pa.setString(2,ed.getPassword());
 			pa.setString(3,ed.getnumber());
-			Create_Table(ed.getname());
+
 			int i = pa.executeUpdate();
 			if (i>0) {
 				JOptionPane.showMessageDialog(null, "REGISTERED");
@@ -44,16 +44,7 @@ public class EmployConnections {
 			JOptionPane.showMessageDialog(null, e.toString());
 		}
 	}
-	private void Create_Table(String name) {
-		String query = "CREATE TABLE "+name+"(Id int(20) primary key auto_increment,customername varchar(200),customerphone varchar(200),itemname varchar(200),date date,itemquantity int)";
-		try {
-			Statement stmt = connection.createStatement();
-			stmt.execute(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	public boolean EmplyeeLogin(EmployeeDetails ed)
 	{
 		String query = "SELECT employname,password FROM emplydetails WHERE employname = '"+ed.getname()+"' and password = '"+ed.getPassword()+"'";

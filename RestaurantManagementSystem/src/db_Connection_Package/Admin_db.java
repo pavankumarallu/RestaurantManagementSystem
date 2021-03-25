@@ -30,7 +30,7 @@ public class Admin_db {
 	}
 	public ArrayList<Admin_model> getorders() {
 		ArrayList<Admin_model> amList = new ArrayList<Admin_model>();
-		String query = "SELECT * FROM admin";
+		String query = "SELECT * FROM admin Where delivaryStatus = False";
 		java.sql.Statement st;
 		try {
 			st = connection.createStatement();
@@ -58,7 +58,7 @@ public class Admin_db {
 	
 	public void assignOrders(String customer_name, String deliveryboy,Date date ,String itemname,int quantity) {
 		java.sql.Date sqldate = new java.sql.Date(date.getTime());
-		String query = "UPDATE admin SET Delivaryboy='"+deliveryboy+"' WHERE Customername = '"+customer_name+"' AND menuitem = '"+itemname+"' AND date= '"+sqldate+"'";
+		String query = "UPDATE admin SET Delivaryboy='"+deliveryboy+"' ,OrderStatus=True  WHERE Customername = '"+customer_name+"' AND menuitem = '"+itemname+"' AND date= '"+sqldate+"'";
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
 			pa.execute();
@@ -68,26 +68,9 @@ public class Admin_db {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		EmployeeEach eee = new EmployeeEach();
-		eee.setcust_ph_no(getPhoneNumber(customer_name));
-		eee.setcustomer_name(customer_name);
-		eee.setmenu_item(itemname);
-		eee.setquantity(quantity);
-		assigntoEmploy(eee,deliveryboy);
-		OrderStatus(customer_name,deliveryboy,itemname,sqldate);
 		
 	}
 	
-	private void OrderStatus(String customer_name, String deliveryboy, String itemname, java.sql.Date sqldate) {
-		String query = "UPDATE "+customer_name+" SET orderStatus=True , Delivaryboy='"+deliveryboy+"' WHERE itemname = '"+itemname+"' AND date= '"+sqldate+"'";
-		try {
-			PreparedStatement pa = connection.prepareStatement(query);
-			pa.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	private String getPhoneNumber(String name)
 	{
 		String query = "SELECT Phonenumber FROM Userdetails WHERE Username='"+name+"'";
@@ -106,22 +89,4 @@ public class Admin_db {
 		return ph;
 	}
 	
-	private void assigntoEmploy(EmployeeEach eee,String delivaryboy) {
-		String query = "INSERT INTO "+delivaryboy+"(customername,customerphone,itemname,date,itemquantity) VALUES(?,?,?,?,?)";
-		Date date = new Date();
-		java.sql.Date sqldate = new java.sql.Date(date.getTime());
-		try {
-			PreparedStatement pa = connection.prepareStatement(query);
-			pa.setString(1,eee.getcustomer_name());
-			pa.setString(2, eee.getcust_ph_no());
-			pa.setString(3, eee.getmenu_item());
-			pa.setDate(4, sqldate);
-			pa.setInt(5, eee.getquantity());
-			pa.executeUpdate();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.toString());
-		}
-		
-	}
-
 }

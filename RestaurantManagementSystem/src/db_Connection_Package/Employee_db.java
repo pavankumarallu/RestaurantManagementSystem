@@ -30,7 +30,7 @@ public class Employee_db {
 	
 	public ArrayList<EmployeeEach> getmyOrders() {
 		ArrayList<EmployeeEach> eelist = new ArrayList<EmployeeEach>();
-		String query = "Select * from "+Employeename+"";
+		String query = "Select * from admin WHERE Delivaryboy = '"+Employeename+"' AND delivaryStatus = FALSE";
 		
 		java.sql.Statement st;
 		try {
@@ -40,10 +40,12 @@ public class Employee_db {
 			while(rs.next())
 			{
 				EmployeeEach ee = new EmployeeEach();
-				ee.setcustomer_name(rs.getString("customername"));
-				ee.setcust_ph_no(rs.getString("customerphone"));
-				ee.setmenu_item(rs.getString("itemname"));
-				ee.setquantity(rs.getInt("itemquantity"));
+				ee.setcustomer_name(rs.getString("Customername"));
+				ee.setAddress(getAddress(rs.getString("Customername")));
+				ee.setcust_ph_no(getPhone(rs.getString("Customername")));
+				ee.setPincode(getPin(rs.getString("Customername")));
+				ee.setmenu_item(rs.getString("menuitem"));
+				ee.setquantity(rs.getInt("quantity"));
 				eelist.add(ee);
 			}
 		} catch (SQLException e) {
@@ -57,43 +59,82 @@ public class Employee_db {
 
 	}
 
-	public void removedb(String itemname, String phone, String custname) {
-		String query = "DELETE from "+ Employeename+" where itemname = '"+itemname+"' AND customername= '"+custname+"'";
+
+	public void updatedeliverystatus(String custname,String itemname) {
+		String query = "UPDATE admin SET delivaryStatus = True WHERE menuitem= '"+itemname+"' AND Delivaryboy='"+Employeename+"' AND Customername = '"+custname+"'";
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
 			pa.execute();
-			JOptionPane.showMessageDialog(null, "Delivered");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	private String getAddress(String custname)
+	{
+		String query = "Select * from userdetails Where Username = '"+custname+"'";
+		java.sql.Statement st;
+		String Add = "";
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
 			
+			while(rs.next())
+			{
+				Add = rs.getString("Address");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		removefromAdmin(itemname,custname);
-		updatedeliverystatus(custname,itemname);
+		
+		return Add;
+		
+	}
+	private String getPhone(String custname)
+	{
+		String query = "Select * from userdetails Where Username = '"+custname+"'";
+		java.sql.Statement st;
+		String Add = "";
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				Add = rs.getString("Phonenumber");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Add;
+		
+	}
+	private String getPin(String custname)
+	{
+		String query = "Select * from userdetails Where Username = '"+custname+"'";
+		java.sql.Statement st;
+		String Add = "";
+		try {
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next())
+			{
+				Add = rs.getString("pincode");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return Add;
 		
 	}
 
-	private void updatedeliverystatus(String custname,String itemname) {
-		String query = "UPDATE "+custname+" SET Deliverystatus = True WHERE itemname= '"+itemname+"' AND Delivaryboy='"+Employeename+"'";
-		try {
-			PreparedStatement pa = connection.prepareStatement(query);
-			pa.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	private void removefromAdmin(String itemname, String custname) {
-		String query = "DELETE from admin where menuitem = '"+itemname+"' AND Customername= '"+custname+"'";
-		try {
-			PreparedStatement pa = connection.prepareStatement(query);
-			pa.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+	
+	
 }

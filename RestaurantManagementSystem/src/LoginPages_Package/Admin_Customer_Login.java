@@ -105,6 +105,7 @@ public class Admin_Customer_Login extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
+		setTitle("LOGIN PAGE");
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -377,7 +378,6 @@ public class Admin_Customer_Login extends JFrame {
 	}
 
 	private void btnAdminLogin(ActionEvent evt, String text, String text2) {
-		// TODO Auto-generated method stub
 		if (text.equals("Admin") && text2.equals("admin")) {
 			try {
 				Admin_Display_Pages adp = new Admin_Display_Pages();

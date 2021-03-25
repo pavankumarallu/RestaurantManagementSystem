@@ -12,10 +12,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Db_Models.EmployeeEach;
+import LoginPages_Package.Admin_Customer_Login;
 import db_Connection_Package.Employee_db;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -32,22 +35,7 @@ public class Employe_Display_Page extends JFrame {
 	private JTable table;
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Employe_Display_Page frame = new Employe_Display_Page("Naidumara");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 * @throws UnsupportedLookAndFeelException 
@@ -89,8 +77,20 @@ public class Employe_Display_Page extends JFrame {
 		JLabel lblHi = new JLabel(Name);
 		lblHi.setForeground(Color.WHITE);
 		lblHi.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 28));
-		lblHi.setBounds(805, 66, 211, 43);
+		lblHi.setBounds(812, 39, 211, 43);
 		panel.add(lblHi);
+		
+		JButton btnNewButton_1 = new JButton("Logout");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				Logout(evt);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 20));
+		btnNewButton_1.setForeground(Color.BLACK);
+		btnNewButton_1.setBackground(Color.WHITE);
+		btnNewButton_1.setBounds(835, 92, 106, 43);
+		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton = new JButton("DONE");
 		
@@ -105,10 +105,10 @@ public class Employe_Display_Page extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		Object[] column = {"Customer Name", "Phone No.", "Item Name", "Item Quantity"};
+		Object[] column = {"Customer Name", "Phone No.","Address","Pincode","Item Name", "Item Quantity"};
 		DefaultTableModel model = new DefaultTableModel();
 		table.setModel(model);
-		final Object[] row = new Object[4];
+		final Object[] row = new Object[6];
 		
 		ArrayList<EmployeeEach> eelist = new ArrayList<EmployeeEach>();
 		eelist = edb.getmyOrders();
@@ -117,8 +117,10 @@ public class Employe_Display_Page extends JFrame {
 		for(int i=0; i<eelist.size();i++) {
 			row[0] = eelist.get(i).getcustomer_name();
 			row[1] = eelist.get(i).getcust_ph_no();
-			row[2] = eelist.get(i).getmenu_item();
-			row[3] =  eelist.get(i).getquantity();
+			row[2] = eelist.get(i).getAddress();
+			row[3] =  eelist.get(i).getPincode();
+			row[4] = eelist.get(i).getmenu_item();
+			row[5] = eelist.get(i).getquantity();
 			model.addRow(row);
 		}
 		scrollPane.setViewportView(table);
@@ -131,15 +133,25 @@ public class Employe_Display_Page extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ii = table.getSelectedRow();
-				String Phone = table.getModel().getValueAt(ii, 1).toString();
-				String itemname = table.getModel().getValueAt(ii, 2).toString();
+				String itemname = table.getModel().getValueAt(ii, 4).toString();
 				String custname = table.getModel().getValueAt(ii, 0).toString();
 				model.removeRow(ii);
-				edb.removedb(itemname,Phone,custname);
-				
-				
+				edb.updatedeliverystatus(custname, itemname);
 			}
 		});
 		contentPane.add(lblNewLabel_1);
+	}
+	private void Logout(ActionEvent evt) {
+		Admin_Customer_Login acl;
+		try {
+			JOptionPane.showMessageDialog(null, "Logged Out Successfully");
+			acl = new Admin_Customer_Login();
+			acl.setVisible(true);
+			this.dispose();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

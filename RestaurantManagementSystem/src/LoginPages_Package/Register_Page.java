@@ -25,6 +25,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
 
 public class Register_Page extends JFrame {
 
@@ -33,6 +36,7 @@ public class Register_Page extends JFrame {
 	private JTextField Phone_number_field;
 	private JPasswordField passwordField;
 	private JPasswordField RepasswordField_1;
+	private JTextField pin;
 
 	/**
 	 * Create the frame.
@@ -45,7 +49,8 @@ public class Register_Page extends JFrame {
 		
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1064, 686);
+		setTitle("REGISTER");
+		setBounds(100, 100, 1229, 788);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.WHITE);
 		contentPane.setBackground(Color.ORANGE);
@@ -55,7 +60,7 @@ public class Register_Page extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLACK);
-		panel.setBounds(0, 0, 428, 649);
+		panel.setBounds(0, 0, 438, 767);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -80,48 +85,81 @@ public class Register_Page extends JFrame {
 		
 		JLabel lblNewLabel_2 = new JLabel("Register");
 		lblNewLabel_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 50));
-		lblNewLabel_2.setBounds(621, 53, 216, 62);
+		lblNewLabel_2.setBounds(752, 29, 216, 62);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel userfield_name = new JLabel("Username");
 		userfield_name.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
-		userfield_name.setBounds(500, 222, 132, 46);
+		userfield_name.setBounds(612, 153, 132, 46);
 		contentPane.add(userfield_name);
 		
 		JLabel Password_name = new JLabel("Password");
 		Password_name.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
-		Password_name.setBounds(500, 290, 132, 46);
+		Password_name.setBounds(612, 211, 132, 46);
 		contentPane.add(Password_name);
 		
 		JLabel Password_name_1 = new JLabel("Re-Enter Password");
 		Password_name_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
-		Password_name_1.setBounds(500, 355, 223, 46);
+		Password_name_1.setBounds(612, 267, 223, 46);
 		contentPane.add(Password_name_1);
 		
 		JLabel phone_no_filed_name = new JLabel("Phone number");
 		phone_no_filed_name.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
-		phone_no_filed_name.setBounds(500, 424, 186, 46);
+		phone_no_filed_name.setBounds(612, 323, 186, 46);
 		contentPane.add(phone_no_filed_name);
 		
 		Username_field = new JTextField();
 		Username_field.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
-		Username_field.setBounds(752, 231, 202, 40);
+		Username_field.setBounds(863, 158, 202, 40);
 		contentPane.add(Username_field);
 		Username_field.setColumns(10);
 		
 		Phone_number_field = new JTextField();
 		Phone_number_field.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
 		Phone_number_field.setColumns(10);
-		Phone_number_field.setBounds(752, 424, 202, 40);
+		Phone_number_field.setBounds(863, 328, 202, 40);
 		contentPane.add(Phone_number_field);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(752, 299, 202, 40);
+		passwordField.setBounds(863, 220, 202, 40);
 		contentPane.add(passwordField);
 		
 		RepasswordField_1 = new JPasswordField();
-		RepasswordField_1.setBounds(752, 361, 202, 40);
+		RepasswordField_1.setBounds(863, 273, 202, 40);
 		contentPane.add(RepasswordField_1);
+		
+		JLabel phone_no_filed_name_1 = new JLabel("Address");
+		phone_no_filed_name_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
+		phone_no_filed_name_1.setBounds(612, 397, 186, 46);
+		contentPane.add(phone_no_filed_name_1);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 14));
+		textArea.setWrapStyleWord(true);
+		textArea.setBounds(863, 402, 202, 90);
+		contentPane.add(textArea);
+		
+		JLabel phone_no_filed_name_1_1 = new JLabel("Preferences");
+		phone_no_filed_name_1_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
+		phone_no_filed_name_1_1.setBounds(612, 575, 186, 46);
+		contentPane.add(phone_no_filed_name_1_1);
+		
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 20));
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setBounds(863, 577, 202, 46);
+		comboBox.addItem("Select Preferences");
+		comboBox.addItem("Veg");
+		comboBox.addItem("Non-Veg");
+		contentPane.add(comboBox);
+		
+		pin = new JTextField();
+		pin.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 23));
+		pin.setColumns(10);
+		pin.setBounds(863, 511, 202, 40);
+		contentPane.add(pin);
+		
 		
 		JButton Reg_btn = new JButton("Register");
 		Reg_btn.addActionListener(new ActionListener() {
@@ -131,9 +169,12 @@ public class Register_Page extends JFrame {
 					String pass = passwordField.getText();
 					String repass = RepasswordField_1.getText();
 					String ph = Phone_number_field.getText();
+					String Address = textArea.getText();
+					String pinc = pin.getText();
+					String Pref = comboBox.getSelectedItem().toString();
 					if(pass.equals(repass))
 					{
-						btnLoginActionPerformed(evt,user,pass,ph);
+						btnLoginActionPerformed(evt,user,pass,ph,Address,Pref,pinc);
 					}
 					else
 					{
@@ -159,16 +200,28 @@ public class Register_Page extends JFrame {
 		Reg_btn.setBackground(Color.BLACK);
 		Reg_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 40));
 		Reg_btn.setForeground(new Color(255, 255, 255));
-		Reg_btn.setBounds(588, 536, 210, 62);
+		Reg_btn.setBounds(752, 646, 210, 62);
 		contentPane.add(Reg_btn);
+		
+		JLabel phone_no_filed_name_1_2 = new JLabel("Pincode");
+		phone_no_filed_name_1_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
+		phone_no_filed_name_1_2.setBounds(612, 505, 186, 46);
+		contentPane.add(phone_no_filed_name_1_2);
+		
+		
+		
+		
 	}
 	
-	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt, String user, String pass, String ph) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt, String user, String pass, String ph,String Address,String Pref,String pinc) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         
 		Userdetails uu = new Userdetails();
 		uu.setName(user);
 		uu.setPassword(pass);
 		uu.setPhoneNo(ph);
+		uu.setAddress(Address);
+		uu.setPref(Pref);
+		uu.setPincode(pinc);
 		UserConnections uc = new UserConnections();
 		uc.RegisterUser(uu);
 		

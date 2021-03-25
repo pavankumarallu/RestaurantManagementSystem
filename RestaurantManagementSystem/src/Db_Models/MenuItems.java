@@ -5,6 +5,14 @@ public class MenuItems {
 	private String review;
 	private int quantity;
 	private double item_price;
+	private String type;
+	
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getType() {
+		return type;
+	}
 	
 	public void setItem_name(String item_name) {
 		this.item_name = item_name;

@@ -8,10 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Chatpackage.Support;
+import Db_Models.BillModel;
 import Db_Models.CustomerEach;
 import Db_Models.EmployeeEach;
 import Db_Models.MenuItems;
 import LoginPages_Package.Admin_Customer_Login;
+import bill_package.Bill_Section;
 import db_Connection_Package.CustomerConnections;
 import db_Connection_Package.SaveMenuItems;
 
@@ -57,14 +60,15 @@ public class Customer_Display_page extends JFrame {
 		UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
 		ArrayList<MenuItems> menulist1 = new ArrayList<MenuItems>();
 		SaveMenuItems smi = new SaveMenuItems();
+		CustomerConnections cc = new CustomerConnections(name);
 		try {
-			menulist1 = smi.getmenu();
+			menulist1 = cc.getmenuPref();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		CustomerConnections cc = new CustomerConnections(name);
-//		
+		
+		setTitle("CUSTOMER PAGE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1064, 686);
 		contentPane = new JPanel();
@@ -75,7 +79,7 @@ public class Customer_Display_page extends JFrame {
 		contentPane.setLayout(null);
 		
 		layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 157, 1050, 492);
+		layeredPane.setBounds(0, 157, 1070, 508);
 		contentPane.add(layeredPane);
 		layeredPane.setLayout(new CardLayout(0, 0));
 		
@@ -150,10 +154,16 @@ public class Customer_Display_page extends JFrame {
 		
 		scrollPane.setViewportView(table);
 		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 27));
+		lblNewLabel_2.setBounds(618, 401, 259, 53);
+		
 		JButton btnNewButton = new JButton("Add");
+		ArrayList<BillModel> bmlist = new ArrayList<BillModel>();
 		final Object[] row = new Object[3];
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BillModel bm = new BillModel();
 				String item =  Menulist_disp_select.getSelectedItem().toString();
 				int quan = Integer.parseInt(quantity_select.getText());
 				double price_each = smi.getpriceofItem(item);
@@ -173,6 +183,15 @@ public class Customer_Display_page extends JFrame {
 				
 				model.addRow(row);
 				
+				bm.setItemname(item);
+				bm.setQuantity(quan);
+				bm.setRate(ttp);
+				bmlist.add(bm);
+				
+				
+				
+				lblNewLabel_2.setText("    Rs. "+String.valueOf(bill));
+				
 				Menulist_disp_select.setSelectedIndex(0);
 				quantity_select.setText("");
 				
@@ -181,34 +200,17 @@ public class Customer_Display_page extends JFrame {
 		btnNewButton.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setBounds(10, 300, 190, 53);
+		btnNewButton.setBounds(10, 300, 419, 53);
 		MakeOrder.add(btnNewButton);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 27));
-		lblNewLabel_2.setBounds(618, 401, 259, 53);
+		
 		MakeOrder.add(lblNewLabel_2);
 		
-		JButton btnGenerateBill = new JButton("Generate Bill");
-		btnGenerateBill.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lblNewLabel_2.setText("Total    :  "+bill);
-				
-				
-			}
-		});
-		btnGenerateBill.setForeground(Color.WHITE);
-		btnGenerateBill.setFont(new Font("Tempus Sans ITC", Font.BOLD, 26));
-		btnGenerateBill.setBackground(Color.BLACK);
-		btnGenerateBill.setBounds(244, 298, 185, 56);
-		MakeOrder.add(btnGenerateBill);
-		
-		JButton btnPayBill = new JButton("Pay Bill");
+		JButton btnPayBill = new JButton("Pay and Generate Bill");
 		btnPayBill.addActionListener(new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				JOptionPane.showConfirmDialog(null, "Pay "+bill);
-				JOptionPane.showMessageDialog(null, "Payment Successfull");
-				switchPanels(Trackorder_panel);
+				
+				btnclickperformed(bmlist,name);
 			}
 		});
 		btnPayBill.setForeground(Color.WHITE);
@@ -275,26 +277,23 @@ public class Customer_Display_page extends JFrame {
 			TrackOrder_Area.append("\n\n\n\n\n\n                                                                   NO Orders");
 		}
 		else {
-			TrackOrder_Area.append("\n\n                                                                            Tracking Details\n\n");
+			TrackOrder_Area.append("\n\n                                                                     Tracking Details\n\n");
 		
 			for (int i = 0; i < celist.size(); i++) {
-				TrackOrder_Area.append("                                                             Item name         :  "+celist.get(i).getitem_name()+"\n");
-				TrackOrder_Area.append("                                                             Item quantity    :  "+celist.get(i).getquantity()+"\n");
-				if (celist.get(i).getOrderstatus() == false) {
-					TrackOrder_Area.append("                                                             OrderStatus       :  Order Received"+"\n");
+				TrackOrder_Area.append("                                                      Item name         :  "+celist.get(i).getitem_name()+"\n");
+				TrackOrder_Area.append("                                                      Item quantity    :  "+celist.get(i).getquantity()+"\n");
+				if (celist.get(i).getOrderstatus() == false && celist.get(i).getDelivaryStatus() == false) {
+					TrackOrder_Area.append("                                                      OrderStatus       :  Order Received"+"\n");
 				}
-				else {
-					TrackOrder_Area.append("                                                             OrderStatus       :  Ready for Delivery\n");
+				else if(celist.get(i).getOrderstatus() == true && celist.get(i).getDelivaryStatus() == false) {
+					TrackOrder_Area.append("                                                      OrderStatus       :  Ready for Delivery\n");
 				}
-				TrackOrder_Area.append("                                                                Delivered By      :  "+celist.get(i).getDelivaryboy()+"\n");
-				if (celist.get(i).getDelivaryStatus() == false) {
-					TrackOrder_Area.append("                                                             Delivery Status   :  Not Delivered\n");
+				else if(celist.get(i).getOrderstatus() == true && celist.get(i).getDelivaryStatus() == true) {
+					TrackOrder_Area.append("                                                      Delivery Status   :  Delivered\n");
 				}
-				else
-				{
-					TrackOrder_Area.append("                                                             Delivery Status   :  Delivered\n");
-				}
-				TrackOrder_Area.append("                                                       ---------------------------------------------------\n\n");
+				TrackOrder_Area.append("                                                         Delivered By      :  "+celist.get(i).getDelivaryboy()+"\n");
+			
+				TrackOrder_Area.append("                                               ---------------------------------------------------\n\n");
 			}
 		}
 		TrackOrder_Area.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
@@ -306,7 +305,7 @@ public class Customer_Display_page extends JFrame {
 		JLabel lblNewLabel = new JLabel("Hello "+name);
 		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 20));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(843, 54, 197, 55);
+		lblNewLabel.setBounds(873, 10, 197, 55);
 		contentPane.add(lblNewLabel);
 		
 		JButton MenuCard_btn = new JButton("Menu Card");
@@ -327,7 +326,7 @@ public class Customer_Display_page extends JFrame {
 		MenuCard_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		MenuCard_btn.setBackground(Color.WHITE);
 		MenuCard_btn.setForeground(Color.BLACK);
-		MenuCard_btn.setBounds(164, 56, 152, 51);
+		MenuCard_btn.setBounds(225, 12, 152, 51);
 		contentPane.add(MenuCard_btn);
 		
 		
@@ -344,7 +343,7 @@ public class Customer_Display_page extends JFrame {
 		MakeOrder_btn.setForeground(Color.BLACK);
 		MakeOrder_btn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		MakeOrder_btn.setBackground(Color.ORANGE);
-		MakeOrder_btn.setBounds(326, 55, 152, 53);
+		MakeOrder_btn.setBounds(225, 93, 152, 53);
 		contentPane.add(MakeOrder_btn);
 		
 		
@@ -360,7 +359,7 @@ public class Customer_Display_page extends JFrame {
 		btnPreviousOrders.setForeground(Color.BLACK);
 		btnPreviousOrders.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		btnPreviousOrders.setBackground(Color.ORANGE);
-		btnPreviousOrders.setBounds(488, 54, 152, 55);
+		btnPreviousOrders.setBounds(424, 10, 152, 55);
 		contentPane.add(btnPreviousOrders);
 		
 		JLabel Img_dis = new JLabel("New label");
@@ -381,13 +380,71 @@ public class Customer_Display_page extends JFrame {
 		btnTrackOrder.setForeground(Color.BLACK);
 		btnTrackOrder.setFont(new Font("Tempus Sans ITC", Font.BOLD, 20));
 		btnTrackOrder.setBackground(Color.ORANGE);
-		btnTrackOrder.setBounds(650, 54, 152, 55);
+		btnTrackOrder.setBounds(424, 92, 152, 55);
 		contentPane.add(btnTrackOrder);
+		
+		JButton btnNewButton_1 = new JButton("Logout");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				Logout(evt);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 15));
+		btnNewButton_1.setBounds(883, 75, 117, 35);
+		contentPane.add(btnNewButton_1);
+		
+		JButton Supports = new JButton("Customer Support");
+		Supports.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnsupport(e,name);
+			}
+		});
+		Supports.setBackground(Color.ORANGE);
+		Supports.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		Supports.setBounds(601, 9, 229, 55);
+		contentPane.add(Supports);
+		
+		JButton btnRateUs = new JButton("Rate us");
+		btnRateUs.setFont(new Font("Tempus Sans ITC", Font.BOLD, 23));
+		btnRateUs.setBackground(Color.ORANGE);
+		btnRateUs.setBounds(601, 93, 229, 55);
+		contentPane.add(btnRateUs);
 	}
 	
-private void btnLoginActionPerformed(final java.awt.event.ActionEvent evt) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		Admin_Customer_Login r = new Admin_Customer_Login();
-        r.setVisible(true);
-        this.dispose();
-    }
+private void btnsupport(ActionEvent e, String name) {
+		Support s = new Support(name);
+		s.setVisible(true);
+		this.dispose();
+		
+	}
+
+private void btnclickperformed(ArrayList<BillModel> bmlist, String name) {
+		if (bmlist.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Please Select items");
+		}
+		else
+		{
+			JOptionPane.showConfirmDialog(null, "Pay "+bill);
+			JOptionPane.showMessageDialog(null, "Payment Successfull");
+			Bill_Section bs = new Bill_Section(bmlist, name);
+			bs.setVisible(true);
+			this.dispose();
+		}
+		
+	}
+
+private void Logout(ActionEvent evt) {
+	Admin_Customer_Login acl;
+	try {
+		JOptionPane.showMessageDialog(null, "Logged Out Successfully");
+		acl = new Admin_Customer_Login();
+		acl.setVisible(true);
+		this.dispose();
+	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+			| UnsupportedLookAndFeelException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
 }

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -34,13 +35,15 @@ public class UserConnections {
 	
 	public void RegisterUser(Userdetails user)
 	{
-		String query = "INSERT INTO userdetails(Username,Password,Phonenumber) VALUES(?,?,?)";
+		String query = "INSERT INTO userdetails(Username,Password,Phonenumber,Address,Preferences,pincode) VALUES(?,?,?,?,?,?)";
 		try {
 			PreparedStatement pa = connection.prepareStatement(query);
 			pa.setString(1,user.getName());
-			pa.setString(2,user.getPassword());
+			pa.setString(2,Base64.getEncoder().encodeToString(user.getPassword().getBytes()));
 			pa.setString(3,user.getPhoneNo());
-			Create_Table(user.getName());
+			pa.setString(4, user.getAddress());
+			pa.setString(5, user.getPref());
+			pa.setString(6, user.getPincode());
 			int i = pa.executeUpdate();
 			if (i>0) {
 				JOptionPane.showMessageDialog(null, "REGISTERED");
@@ -51,21 +54,10 @@ public class UserConnections {
 	}
 
 
-	private void Create_Table(String Username) {
-		// TODO Auto-generated method stub
-		String query = "CREATE TABLE "+Username+"(Id int(20) primary key auto_increment,itemname varchar(200),date date,itemrate double,itemquantity int,Delivaryboy varchar(200),orderStatus tinyint DEFAULT False,Deliverystatus tinyint DEFAULT False)";
-		Statement stmt;
-		try {
-			stmt = connection.createStatement();
-			stmt.execute(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
+	
 	public boolean LoginUser(Userdetails user)
 	{
-		String query = "SELECT Username,Password FROM userdetails WHERE Username = '"+user.getName()+"' and Password = '"+user.getPassword()+"'";
+		String query = "SELECT Username,Password FROM userdetails WHERE Username = '"+user.getName()+"' and Password = '"+Base64.getEncoder().encodeToString(user.getPassword().getBytes())+"'";
 		
 		java.sql.Statement st;
 		try {

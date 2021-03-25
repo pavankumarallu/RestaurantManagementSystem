@@ -6,9 +6,18 @@ public class Admin_model {
 	String customer_name;
 	String delivery_boy;
 	String itemname;
+	double itemrate;
 	Date date;
 	int quantity;
 	boolean delivaryStatus;
+	
+	
+	public double getItemrate() {
+		return itemrate;
+	}
+	public void setItemrate(double itemrate) {
+		this.itemrate = itemrate;
+	}
 	public void setDate(Date date) {
 		this.date = date;
 	}

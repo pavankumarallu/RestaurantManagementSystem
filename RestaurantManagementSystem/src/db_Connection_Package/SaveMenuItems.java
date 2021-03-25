@@ -29,7 +29,7 @@ public class SaveMenuItems {
 	}
 	public void setmenu(MenuItems mi)
 	{
-		String query = "INSERT INTO menuitems(itemname,itemPrice,itemquantity,itemreview) VALUES(?,?,?,?)";
+		String query = "INSERT INTO menuitems(itemname,itemPrice,itemquantity,itemreview,type) VALUES(?,?,?,?,?)";
 		PreparedStatement pa;
 		try {
 			pa = connection.prepareStatement(query);
@@ -37,6 +37,7 @@ public class SaveMenuItems {
 			pa.setDouble(2, mi.getItem_price());
 			pa.setInt(3, mi.getQuantity());
 			pa.setString(4, mi.getReview());
+			pa.setString(5, mi.getType());
 			pa.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

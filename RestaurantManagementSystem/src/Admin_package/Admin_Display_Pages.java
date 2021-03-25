@@ -16,6 +16,7 @@ import Db_Models.MenuItems;
 //import Db_Models.Employdetail;
 //import Db_Models.Menu_Items;
 import Db_Models.Userdetails;
+import LoginPages_Package.Admin_Customer_Login;
 import db_Connection_Package.Admin_db;
 //import Db_Models.customer_details;
 import db_Connection_Package.EmployConnections;
@@ -91,8 +92,9 @@ public class Admin_Display_Pages extends JFrame {
 		EmployConnections ec = new EmployConnections();
 		Admin_db adb = new Admin_db();
 		
+		setTitle("ADMIN PAGE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1064, 686);
+		setBounds(100, 100, 1064, 719);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,7 +102,7 @@ public class Admin_Display_Pages extends JFrame {
 		contentPane.setLayout(null);
 		
 		layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 156, 1050, 493);
+		layeredPane.setBounds(0, 146, 1064, 549);
 		contentPane.add(layeredPane);
 		layeredPane.setLayout(new CardLayout(0, 0));
 		
@@ -167,37 +169,51 @@ public class Admin_Display_Pages extends JFrame {
 		}
 		Item_id = new JTextField();
 		Item_id.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-		Item_id.setBounds(699, 298, 163, 26);
+		Item_id.setBounds(699, 283, 163, 26);
 		Edit_menu.add(Item_id);
 		Item_id.setColumns(10);
 		
 		Item_name = new JTextField();
 		Item_name.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		Item_name.setColumns(10);
-		Item_name.setBounds(699, 334, 163, 26);
+		Item_name.setBounds(699, 319, 163, 26);
 		Edit_menu.add(Item_name);
 		
 		Item_Price = new JTextField();
 		Item_Price.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		Item_Price.setColumns(10);
-		Item_Price.setBounds(699, 370, 163, 26);
+		Item_Price.setBounds(699, 355, 163, 26);
 		Edit_menu.add(Item_Price);
 		
 		item_Quantity = new JTextField();
 		item_Quantity.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		item_Quantity.setColumns(10);
-		item_Quantity.setBounds(699, 406, 163, 26);
+		item_Quantity.setBounds(699, 391, 163, 26);
 		Edit_menu.add(item_Quantity);
 		
 		Item_Review = new JTextField();
 		Item_Review.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 		Item_Review.setColumns(10);
-		Item_Review.setBounds(699, 442, 163, 26);
+		Item_Review.setBounds(699, 427, 163, 26);
 		Edit_menu.add(Item_Review);
 		
+		JLabel lblNewLabel_1_3_1 = new JLabel("Type");
+		lblNewLabel_1_3_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 24));
+		lblNewLabel_1_3_1.setBounds(487, 461, 163, 26);
+		Edit_menu.add(lblNewLabel_1_3_1);
 		
 		
 		scrollPane.setViewportView(table);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.addItem("Select type");
+		comboBox_1.addItem("Veg");
+		comboBox_1.addItem("Non-Veg");
+		comboBox_1.setBackground(Color.WHITE);
+		comboBox_1.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 19));
+		comboBox_1.setBounds(699, 468, 163, 26);
+		Edit_menu.add(comboBox_1);
+		
 		
 		JButton add_btn = new JButton("Add");
 		add_btn.addActionListener(new ActionListener() {
@@ -219,6 +235,7 @@ public class Admin_Display_Pages extends JFrame {
 				m.setItem_price(d);
 				m.setReview(Item_Review.getText());
 				m.setQuantity(Integer.parseInt(item_Quantity.getText()));
+				m.setType(comboBox_1.getSelectedItem().toString());
 				
 				smi.setmenu(m);
 				model.addRow(row);
@@ -228,6 +245,7 @@ public class Admin_Display_Pages extends JFrame {
 				item_Quantity.setText("");
 				Item_Price.setText("");
 				Item_Review.setText("");
+				comboBox_1.setSelectedIndex(0);
 				JOptionPane.showMessageDialog(null, "Saved Successfully");
 				}
 			}
@@ -258,28 +276,31 @@ public class Admin_Display_Pages extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Item name");
 		lblNewLabel_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
-		lblNewLabel_1.setBounds(487, 333, 122, 26);
+		lblNewLabel_1.setBounds(487, 317, 122, 26);
 		Edit_menu.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Item Price");
 		lblNewLabel_1_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
-		lblNewLabel_1_1.setBounds(487, 365, 122, 26);
+		lblNewLabel_1_1.setBounds(487, 353, 122, 26);
 		Edit_menu.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Item Quantity");
 		lblNewLabel_1_2.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
-		lblNewLabel_1_2.setBounds(487, 401, 163, 26);
+		lblNewLabel_1_2.setBounds(487, 389, 163, 26);
 		Edit_menu.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Item Review");
 		lblNewLabel_1_3.setFont(new Font("Tempus Sans ITC", Font.BOLD, 24));
-		lblNewLabel_1_3.setBounds(487, 437, 163, 26);
+		lblNewLabel_1_3.setBounds(487, 425, 163, 26);
 		Edit_menu.add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Item Id");
 		lblNewLabel_1_4.setFont(new Font("Tempus Sans ITC", Font.BOLD, 25));
-		lblNewLabel_1_4.setBounds(487, 297, 99, 26);
+		lblNewLabel_1_4.setBounds(490, 281, 99, 26);
 		Edit_menu.add(lblNewLabel_1_4);
+		
+		
+		
 		
 		
 		JPanel Customer_list = new JPanel();
@@ -536,7 +557,7 @@ public class Admin_Display_Pages extends JFrame {
 		JLabel lblNewLabel = new JLabel("Hello Admin");
 		lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD | Font.ITALIC, 28));
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(853, 63, 234, 48);
+		lblNewLabel.setBounds(861, 20, 234, 48);
 		contentPane.add(lblNewLabel);
 		
 		JLabel img_dis = new JLabel("New label");
@@ -576,6 +597,32 @@ public class Admin_Display_Pages extends JFrame {
 		orser_btn.setBackground(Color.ORANGE);
 		orser_btn.setBounds(649, 10, 179, 48);
 		contentPane.add(orser_btn);
+		
+		JButton btnNewButton_1 = new JButton("Logout");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				Logout(evt);
+				
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tempus Sans ITC", Font.BOLD, 21));
+		btnNewButton_1.setBounds(896, 78, 108, 39);
+		contentPane.add(btnNewButton_1);
 
+	}
+
+	private void Logout(ActionEvent evt) {
+		Admin_Customer_Login acl;
+		try {
+			JOptionPane.showMessageDialog(null, "Logged Out Successfully");
+			acl = new Admin_Customer_Login();
+			acl.setVisible(true);
+			this.dispose();
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
